@@ -1,1 +1,1 @@
-#Snowcapper - Immutable config management for Alpine
+# Snowcapper - Immutable config management for Alpine
