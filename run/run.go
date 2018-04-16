@@ -1,4 +1,0 @@
-package run
-
-func Run() {
-}

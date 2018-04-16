@@ -6,7 +6,7 @@ type Package struct {
 	ServiceFile string
 }
 
-func Get() []*Package {
+func Make() []*Package {
 	packages := make([]Package, 0)
 	packages = append(packages, Package{
 		Name: "vault"
@@ -45,4 +45,5 @@ stop () {
         eend $?
 }`
 	})
+	return packages
 }

@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	c := config.Get()
+	c := config.Make()
 }
