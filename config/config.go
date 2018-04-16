@@ -1,16 +1,16 @@
 package config
 
 type Package struct {
-	Name string
-	Source string
+	Name        string
+	Source      string
 	ServiceFile string
 }
 
-func Make() []*Package {
+func Make() []Package {
 	packages := make([]Package, 0)
 	packages = append(packages, Package{
-		Name: "vault"
-		Source: "https://releases.hashicorp.com/vault/0.10.0/vault_0.10.0_linux_amd64.zip"
+		Name:   "vault",
+		Source: "https://releases.hashicorp.com/vault/0.10.0/vault_0.10.0_linux_amd64.zip",
 		ServiceFile: `
 #!/sbin/openrc-run
 
@@ -43,7 +43,7 @@ stop () {
                         --user $USER \
                         --exec $DAEMON
         eend $?
-}`
+}`,
 	})
 	return packages
 }
