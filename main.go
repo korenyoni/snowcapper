@@ -1,8 +1,9 @@
 package main
 
 import (
-	github.com/yonkornilov/snowcapper/config
+	"github.com/yonkornilov/snowcapper/config"
 )
 
 func main() {
+	c := config.Get()
 }
