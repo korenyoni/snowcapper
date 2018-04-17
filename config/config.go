@@ -1,9 +1,15 @@
 package config
 
+type ConfigFile struct {
+	Path    string
+	Content string
+}
+
 type Package struct {
 	Name        string
 	Source      string
 	ServiceFile string
+	ConfigFiles []ConfigFile
 }
 
 func Make() []Package {
