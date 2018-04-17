@@ -1,6 +1,6 @@
 package config
 
-type ConfigFile struct {
+type PackageConfigFile struct {
 	Path    string
 	Content string
 }
@@ -9,10 +9,14 @@ type Package struct {
 	Name        string
 	Source      string
 	ServiceFile string
-	ConfigFiles []ConfigFile
+	ConfigFiles []PackageConfigFile
 }
 
-func Make() []Package {
+type Config struct {
+	Packages []Package
+}
+
+func Make() Config {
 	packages := make([]Package, 0)
 	packages = append(packages, Package{
 		Name:   "vault",
@@ -51,5 +55,7 @@ stop () {
         eend $?
 }`,
 	})
-	return packages
+	return Config{
+		Packages: packages,
+	}
 }
