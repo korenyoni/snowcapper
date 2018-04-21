@@ -3,13 +3,18 @@ package runner
 import (
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/download"
+	"github.com/yonkornilov/snowcapper/extract"
 	"os"
 )
 
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
 		filePath := makePath(p.Name)
-		err := download.Download(p.Name, filePath, p.Source)
+		err := download.Run(p.Name, filePath, p.Source)
+		if err != nil {
+			return err
+		}
+		err = extract.Run(p.Name, filePath)
 		if err != nil {
 			return err
 		}
