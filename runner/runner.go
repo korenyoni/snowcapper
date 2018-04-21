@@ -7,8 +7,12 @@ import (
 
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
-		download.Download(p.Name, p.Source)
+		download.Download(makePath(p.Name), p.Source)
 	}
 
 	return nil
+}
+
+func makePath(fileName string) string {
+	return "/usr/bin/" + fileName
 }
