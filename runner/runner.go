@@ -9,7 +9,7 @@ import (
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
 		filePath := makePath(p.Name)
-		err := download.Download(filePath, p.Source)
+		err := download.Download(p.Name, filePath, p.Source)
 		if err != nil {
 			return err
 		}

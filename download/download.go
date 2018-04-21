@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func Download(path string, url string) error {
+func Download(name string, path string, url string) error {
 	out, err := os.Create(path)
 	if err != nil {
 		return err
