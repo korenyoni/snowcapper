@@ -1,8 +1,8 @@
 package download
 
 import (
-	"http"
 	"io"
+	"net/http"
 	"os"
 )
 

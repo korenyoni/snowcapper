@@ -5,9 +5,9 @@ import (
 	"github.com/yonkornilov/snowcapper/download"
 )
 
-func Run(Config c) error {
-	for p := range c.Packages {
-
+func Run(c config.Config) error {
+	for _, p := range c.Packages {
+		download.Download(p.Name, p.Source)
 	}
 
 	return nil
