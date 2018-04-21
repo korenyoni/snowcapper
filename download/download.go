@@ -1,12 +1,14 @@
 package download
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
 )
 
 func Download(name string, path string, url string) error {
+	fmt.Printf("Downloading %s from %s ...", name, url)
 	out, err := os.Create(path)
 	if err != nil {
 		return err
@@ -24,5 +26,6 @@ func Download(name string, path string, url string) error {
 		return err
 	}
 
+	fmt.Printf("Successfully downloaded %s to %s", name, path)
 	return nil
 }
