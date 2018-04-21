@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func Download(name string, path string, url string) error {
+func Run(name string, path string, url string) error {
 	fmt.Printf("Downloading %s from %s ...", name, url)
 	out, err := os.Create(path)
 	if err != nil {
