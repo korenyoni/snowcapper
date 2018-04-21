@@ -9,8 +9,14 @@ import (
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
 		filePath := makePath(p.Name)
-		download.Download(filePath, p.Source)
-		os.Chmod(filePath, 0700)
+		err := download.Download(filePath, p.Source)
+		if err != nil {
+			return err
+		}
+		err = os.Chmod(filePath, 0700)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
