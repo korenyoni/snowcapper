@@ -2,20 +2,21 @@ package download
 
 import (
 	"fmt"
+	"github.com/yonkornilov/snowcapper/config"
 	"io"
 	"net/http"
 	"os"
 )
 
-func Run(name string, path string, url string) error {
-	fmt.Printf("Downloading %s from %s ...", name, url)
-	out, err := os.Create(path)
+func Run(p config.Package, target string) error {
+	fmt.Printf("Downloading %s from %s ...", p.Name, p.Source)
+	out, err := os.Create(target)
 	if err != nil {
 		return err
 	}
 	defer out.Close()
 
-	resp, err := http.Get(url)
+	resp, err := http.Get(p.Source)
 	if err != nil {
 		return err
 	}
@@ -26,6 +27,6 @@ func Run(name string, path string, url string) error {
 		return err
 	}
 
-	fmt.Printf("Successfully downloaded %s to %s", name, path)
+	fmt.Printf("Successfully downloaded %s to %s", p.Name, target)
 	return nil
 }

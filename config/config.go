@@ -8,6 +8,7 @@ type PackageConfigFile struct {
 type Package struct {
 	Name        string
 	Source      string
+	Type        string
 	ServiceFile string
 	ConfigFiles []PackageConfigFile
 }
@@ -21,6 +22,7 @@ func Make() Config {
 	packages = append(packages, Package{
 		Name:   "vault",
 		Source: "https://releases.hashicorp.com/vault/0.10.0/vault_0.10.0_linux_amd64.zip",
+		Type:   "zip",
 		ServiceFile: `
 #!/sbin/openrc-run
 

@@ -9,12 +9,13 @@ import (
 
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
-		filePath := makePath(p.Name)
-		err := download.Run(p.Name, filePath, p.Source)
+		downloadPath := getDownloadPath(p.Name)
+		filePath := getPath(p.Name)
+		err := download.Run(p, downloadPath)
 		if err != nil {
 			return err
 		}
-		err = extract.Run(p.Name, filePath)
+		err = extract.Run(p, downloadPath, filePath)
 		if err != nil {
 			return err
 		}
@@ -27,6 +28,10 @@ func Run(c config.Config) error {
 	return nil
 }
 
-func makePath(fileName string) string {
+func getPath(fileName string) string {
 	return "/usr/bin/" + fileName
+}
+
+func getDownloadPath(fileName string) string {
+	return "/tmp/" + fileName
 }
