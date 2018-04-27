@@ -94,7 +94,7 @@ func copyToTarget(src string, target string) error {
 }
 
 func getExtractedPath(src string) string {
-	return src + "_unarchive"
+	return src + "_extracted"
 }
 
 func getExtractedBinaryPath(p config.Package, extractedPath string) string {
