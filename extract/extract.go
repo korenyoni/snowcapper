@@ -10,16 +10,19 @@ import (
 )
 
 func Run(p config.Package, src string, target string) error {
+	fmt.Printf("Extracting %s from %s", p.Type, src)
 	err, extractedPath := extract(p.Type, src)
 	if err != nil {
 		return err
 	}
 
+	fmt.Printf("Copying %s to %s", getExtractedBinaryPath(p, extractedPath), target)
 	err = copyToTarget(getExtractedBinaryPath(p, extractedPath), target)
 	if err != nil {
 		return err
 	}
 
+	fmt.Printf("Removing %s", extractedPath)
 	err = os.RemoveAll(extractedPath)
 	if err != nil {
 		return err
