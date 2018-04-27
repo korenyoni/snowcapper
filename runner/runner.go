@@ -9,7 +9,7 @@ import (
 
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
-		downloadPath := getDownloadPath(p.Name)
+		downloadPath := getDownloadPath(p)
 		filePath := getPath(p.Name)
 		err := download.Run(p, downloadPath)
 		if err != nil {
@@ -32,6 +32,6 @@ func getPath(fileName string) string {
 	return "/usr/bin/" + fileName
 }
 
-func getDownloadPath(fileName string) string {
-	return "/tmp/" + fileName
+func getDownloadPath(p config.Package) string {
+	return "/tmp/" + p.Name + "." + p.Type
 }
