@@ -9,7 +9,6 @@ type Package struct {
 	Name        string
 	Source      string
 	Type        string
-	ServiceFile string
 	ConfigFiles []PackageConfigFile
 }
 
@@ -23,7 +22,9 @@ func Make() Config {
 		Name:   "vault",
 		Source: "https://releases.hashicorp.com/vault/0.10.0/vault_0.10.0_linux_amd64.zip",
 		Type:   "zip",
-		ServiceFile: `
+		ConfigFiles: []PackageConfigFile{PackageConfigFile{
+			Path: "/etc/init.d/vault",
+			Content: `
 #!/sbin/openrc-run
 
 NAME=vault
@@ -55,8 +56,7 @@ stop () {
                         --user $USER \
                         --exec $DAEMON
         eend $?
-}`,
-	})
+}`}}})
 	return Config{
 		Packages: packages,
 	}
