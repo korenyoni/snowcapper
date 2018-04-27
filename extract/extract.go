@@ -28,6 +28,12 @@ func Run(p config.Package, src string, target string) error {
 		return err
 	}
 
+	fmt.Printf("Removing %s", src)
+	err = os.RemoveAll(src)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
