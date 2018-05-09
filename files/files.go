@@ -3,15 +3,18 @@ package files
 import (
 	"fmt"
 	"github.com/yonkornilov/snowcapper/config"
-	"ioutil"
+	"io/ioutil"
 )
 
-func Run(p config.Package) {
-	for packageConfigFile := range p.ConfigFiles {
+func Run(p config.Package) error {
+	for _, packageConfigFile := range p.ConfigFiles {
 		fmt.Printf("Writing to %s ...", packageConfigFile.Path)
 		data := []byte(packageConfigFile.Content)
-		file, err := ioutil.WriteFile(packageConfigFile.Path, 0644)
-		defer file.Close()
+		err := ioutil.WriteFile(packageConfigFile.Path, data, 0644)
+		if err != nil {
+			return err
+		}
 		fmt.Printf("Done.")
 	}
+	return nil
 }
