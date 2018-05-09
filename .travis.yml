@@ -6,6 +6,6 @@ go:
   - master
 
 script:
- - go get ./...
- - go test -v ./...
- - make build
+ - make get
+ - make test
+ - make binary
