@@ -9,3 +9,6 @@ jobs:
       - run: make get
       - run: make binary
       - run: make test
+      - store_artifacts:
+        path: snowcapper
+        destination: snowcapper
