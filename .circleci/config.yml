@@ -24,10 +24,10 @@ jobs:
     docker:
       - image: alpine:3.7
     steps:
-      - attach_workspace:
-          at: snowcapper
       - run: apk update
       - run: apk add ca-certificates
+      - attach_workspace:
+          at: snowcapper
       - run: sudo ./snowcapper
 
 workflows:
