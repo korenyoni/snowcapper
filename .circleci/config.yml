@@ -25,7 +25,7 @@ jobs:
       - image: alpine:3.7
     steps:
       - attach_workspace:
-        at: snowcapper
+          at: snowcapper
       - run: apk update
       - run: apk add ca-certificates
       - run: sudo ./snowcapper
