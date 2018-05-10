@@ -13,7 +13,8 @@ type Runner struct {
 	binaryPath   string
 }
 
-func Run(c config.Config) error {
+func (r *Runner) Run() error {
+	c := r.Config
 	for _, p := range c.Packages {
 		downloadPath := p.GetDownloadPath()
 		filePath := p.GetBinaryPath()
@@ -32,4 +33,10 @@ func Run(c config.Config) error {
 	}
 
 	return nil
+}
+
+func Make(config config.Config) Runner {
+	return Runner{
+		Config: &config,
+	}
 }
