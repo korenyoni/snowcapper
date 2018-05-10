@@ -29,3 +29,15 @@ jobs:
       - run: apk update
       - run: apk add ca-certificates
       - run: sudo ./snowcapper
+
+workflows:
+  version: 2
+  btd:
+    jobs:
+      - test-golang
+      - build:
+          requires:
+            - test-golang
+      - test-alpine:
+          requires:
+            - build
