@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/runner"
+	"log"
 )
 
 func main() {
@@ -10,6 +11,6 @@ func main() {
 	r := runner.Make(c)
 	err := r.Run
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 }
