@@ -17,6 +17,7 @@ jobs:
       - run: make get
       - run: make binary
       - persist_to_workspace:
+          root: /go/src/github.com/yonkornilov/snowcapper
           paths:
             - snowcapper
   test-alpine:
