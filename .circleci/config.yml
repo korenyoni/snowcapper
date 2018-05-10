@@ -27,8 +27,8 @@ jobs:
       - run: apk update
       - run: apk add ca-certificates sudo
       - attach_workspace:
-          at: /
-      - run: sudo ./snowcapper
+          at: /usr/bin/
+      - run: sudo snowcapper
 
 workflows:
   version: 2
