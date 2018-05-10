@@ -61,3 +61,11 @@ stop () {
 		Packages: packages,
 	}
 }
+
+func (p *Package) GetBinaryPath() string {
+	return "/usr/bin/" + p.Name
+}
+
+func (p *Package) GetDownloadPath() string {
+	return "/tmp/" + p.Name + "." + p.Type
+}

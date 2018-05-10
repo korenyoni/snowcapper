@@ -7,10 +7,16 @@ import (
 	"os"
 )
 
+type Runner struct {
+	Config       *config.Config
+	downloadPath string
+	binaryPath   string
+}
+
 func Run(c config.Config) error {
 	for _, p := range c.Packages {
-		downloadPath := getDownloadPath(p)
-		filePath := getPath(p)
+		downloadPath := p.GetDownloadPath()
+		filePath := p.GetBinaryPath()
 		err := download.Run(p, downloadPath)
 		if err != nil {
 			return err
@@ -26,12 +32,4 @@ func Run(c config.Config) error {
 	}
 
 	return nil
-}
-
-func getPath(p config.Package) string {
-	return "/usr/bin/" + p.Name
-}
-
-func getDownloadPath(p config.Package) string {
-	return "/tmp/" + p.Name + "." + p.Type
 }
