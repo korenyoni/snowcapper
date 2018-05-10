@@ -1,5 +1,13 @@
 version: 2
 jobs:
+  test-golang:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/yonkornilov/snowcapper
+    steps:
+      - checkout
+      - run: make get
+      - run: make test
   build:
     docker:
       - image: circleci/golang:1.9
@@ -8,7 +16,15 @@ jobs:
       - checkout
       - run: make get
       - run: make binary
-      - run: make test
-      - store_artifacts:
-          path: snowcapper
-          destination: snowcapper
+    persist_to_workspace:
+      paths:
+      - snowcapper
+  test-alpine:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - attach_workspace:
+        at: snowcapper
+      - run: apk update
+      - run: apk add ca-certificates
+      - run: sudo ./snowcapper
