@@ -11,6 +11,6 @@ func main() {
 	r := runner.Make(c)
 	err := r.Run
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 }
