@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/runner"
-	"log"
 )
 
 func main() {
