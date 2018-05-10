@@ -16,9 +16,9 @@ jobs:
       - checkout
       - run: make get
       - run: make binary
-    persist_to_workspace:
-      paths:
-      - snowcapper
+      - persist_to_workspace:
+          paths:
+            - snowcapper
   test-alpine:
     docker:
       - image: alpine:3.7
