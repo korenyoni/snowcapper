@@ -8,7 +8,7 @@ import (
 func main() {
 	c := config.Make()
 	r := runner.Make(c)
-	err := r.Run
+	err := r.Run()
 	if err != nil {
 		panic(err)
 	}
