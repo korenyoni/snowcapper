@@ -8,7 +8,8 @@ import (
 )
 
 type Runner struct {
-	Config *config.Config
+	Config     *config.Config
+	BinaryMode os.FileMode
 }
 
 func (r *Runner) Run() error {
@@ -22,7 +23,7 @@ func (r *Runner) Run() error {
 		if err != nil {
 			return err
 		}
-		err = os.Chmod(binaryPath, 0700)
+		err = r.ChmodBinary(binaryPath, r.BinaryMode)
 		if err != nil {
 			return err
 		}
@@ -49,8 +50,17 @@ func (r *Runner) Extract(p config.Package, downloadPath string) (binaryPath stri
 	return binaryPath, nil
 }
 
+func (r *Runner) ChmodBinary(binaryPath string, mode os.FileMode) (err error) {
+	err = os.Chmod(binaryPath, mode)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func Make(config config.Config) Runner {
 	return Runner{
-		Config: &config,
+		Config:     &config,
+		BinaryMode: 0700,
 	}
 }
