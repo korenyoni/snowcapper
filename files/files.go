@@ -14,7 +14,7 @@ func Run(p config.Package) error {
 		if err != nil {
 			return err
 		}
-		fmt.Printf("Done.")
+		fmt.Printf("Done.\n")
 	}
 	return nil
 }
