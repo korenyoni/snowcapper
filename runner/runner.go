@@ -4,6 +4,7 @@ import (
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/download"
 	"github.com/yonkornilov/snowcapper/extract"
+	"github.com/yonkornilov/snowcapper/files"
 	"os"
 )
 
@@ -24,6 +25,10 @@ func (r *Runner) Run() error {
 			return err
 		}
 		err = r.ChmodBinary(binaryPath, r.BinaryMode)
+		if err != nil {
+			return err
+		}
+		err = r.CopyConfigFiles(p)
 		if err != nil {
 			return err
 		}
@@ -52,6 +57,14 @@ func (r *Runner) Extract(p config.Package, downloadPath string) (binaryPath stri
 
 func (r *Runner) ChmodBinary(binaryPath string, mode os.FileMode) (err error) {
 	err = os.Chmod(binaryPath, mode)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *Runner) CopyConfigFiles(p config.Package) (err error) {
+	err = files.Run(p)
 	if err != nil {
 		return err
 	}
