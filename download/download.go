@@ -9,7 +9,7 @@ import (
 )
 
 func Run(p config.Package, target string) error {
-	fmt.Printf("Downloading %s from %s ...", p.Name, p.Source)
+	fmt.Printf("Downloading %s from %s ...\n", p.Name, p.Source)
 	out, err := os.Create(target)
 	if err != nil {
 		return err
@@ -27,6 +27,6 @@ func Run(p config.Package, target string) error {
 		return err
 	}
 
-	fmt.Printf("Successfully downloaded %s to %s", p.Name, target)
+	fmt.Printf("Successfully downloaded %s to %s\n", p.Name, target)
 	return nil
 }
