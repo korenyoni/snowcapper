@@ -8,9 +8,7 @@ import (
 )
 
 type Runner struct {
-	Config       *config.Config
-	downloadPath string
-	binaryPath   string
+	Config *config.Config
 }
 
 func (r *Runner) Run() error {
