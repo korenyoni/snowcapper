@@ -8,7 +8,7 @@ import (
 
 func Run(p config.Package) error {
 	for _, packageConfigFile := range p.ConfigFiles {
-		fmt.Printf("Writing to %s ...", packageConfigFile.Path)
+		fmt.Printf("Writing to %s ... \n", packageConfigFile.Path)
 		data := []byte(packageConfigFile.Content)
 		err := ioutil.WriteFile(packageConfigFile.Path, data, 0644)
 		if err != nil {
