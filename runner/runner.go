@@ -16,19 +16,19 @@ type Runner struct {
 func (r *Runner) Run() error {
 	c := r.Config
 	for _, p := range c.Packages {
-		downloadPath, err := r.Download(p)
+		downloadPath, err := r.download(p)
 		if err != nil {
 			return err
 		}
-		binaryPath, err := r.Extract(p, downloadPath)
+		binaryPath, err := r.extract(p, downloadPath)
 		if err != nil {
 			return err
 		}
-		err = r.ChmodBinary(binaryPath, r.BinaryMode)
+		err = r.chmodBinary(binaryPath, r.BinaryMode)
 		if err != nil {
 			return err
 		}
-		err = r.CopyConfigFiles(p)
+		err = r.copyConfigFiles(p)
 		if err != nil {
 			return err
 		}
@@ -37,7 +37,7 @@ func (r *Runner) Run() error {
 	return nil
 }
 
-func (r *Runner) Download(p config.Package) (downloadPath string, err error) {
+func (r *Runner) download(p config.Package) (downloadPath string, err error) {
 	downloadPath = p.GetDownloadPath()
 	err = download.Run(p, downloadPath)
 	if err != nil {
@@ -46,7 +46,7 @@ func (r *Runner) Download(p config.Package) (downloadPath string, err error) {
 	return downloadPath, nil
 }
 
-func (r *Runner) Extract(p config.Package, downloadPath string) (binaryPath string, err error) {
+func (r *Runner) extract(p config.Package, downloadPath string) (binaryPath string, err error) {
 	binaryPath = p.GetBinaryPath()
 	err = extract.Run(p, downloadPath, binaryPath)
 	if err != nil {
@@ -55,7 +55,7 @@ func (r *Runner) Extract(p config.Package, downloadPath string) (binaryPath stri
 	return binaryPath, nil
 }
 
-func (r *Runner) ChmodBinary(binaryPath string, mode os.FileMode) (err error) {
+func (r *Runner) chmodBinary(binaryPath string, mode os.FileMode) (err error) {
 	err = os.Chmod(binaryPath, mode)
 	if err != nil {
 		return err
@@ -63,7 +63,7 @@ func (r *Runner) ChmodBinary(binaryPath string, mode os.FileMode) (err error) {
 	return nil
 }
 
-func (r *Runner) CopyConfigFiles(p config.Package) (err error) {
+func (r *Runner) copyConfigFiles(p config.Package) (err error) {
 	err = files.Run(p)
 	if err != nil {
 		return err
