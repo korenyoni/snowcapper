@@ -16,7 +16,7 @@ type Config struct {
 	Packages []Package
 }
 
-func Make() Config {
+func New() Config {
 	packages := make([]Package, 0)
 	packages = append(packages, Package{
 		Name:   "vault",

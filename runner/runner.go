@@ -71,7 +71,7 @@ func (r *Runner) copyConfigFiles(p config.Package) (err error) {
 	return nil
 }
 
-func Make(config config.Config) Runner {
+func New(config config.Config) Runner {
 	return Runner{
 		Config:     &config,
 		BinaryMode: 0700,

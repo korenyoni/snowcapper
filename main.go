@@ -6,8 +6,8 @@ import (
 )
 
 func main() {
-	c := config.Make()
-	r := runner.Make(c)
+	c := config.New()
+	r := runner.New(c)
 	err := r.Run()
 	if err != nil {
 		panic(err)
