@@ -7,6 +7,7 @@ import (
 	"github.com/yonkornilov/snowcapper/config"
 	"io"
 	"os"
+	"strings"
 )
 
 func Run(p config.Package, src string, target string) error {
@@ -38,7 +39,7 @@ func Run(p config.Package, src string, target string) error {
 }
 
 func extract(archiveType string, src string) (error, string) {
-	extractedPath := getExtractedPath(src)
+	extractedPath := getExtractedPath(archiveType, src)
 	var err error
 	switch archiveType {
 	case "zip":
@@ -93,8 +94,9 @@ func copyToTarget(src string, target string) error {
 	return nil
 }
 
-func getExtractedPath(src string) string {
-	return src + "_extracted"
+func getExtractedPath(archiveType string, src string) string {
+	strippedDownloadPath := strings.Replace(src, "."+archiveType, "", -1)
+	return strippedDownloadPath + "_extracted"
 }
 
 func getExtractedBinaryPath(p config.Package, extractedPath string) string {
