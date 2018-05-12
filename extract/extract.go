@@ -95,8 +95,8 @@ func copyToTarget(src string, target string) error {
 }
 
 func getExtractedPath(archiveType string, src string) string {
-	strippedDownloadPath := strings.Replace(src, "."+archiveType, "", -1)
-	return strippedDownloadPath + "_extracted"
+	extractedPath := strings.Replace(src, "."+archiveType, "", -1)
+	return extractedPath
 }
 
 func getExtractedBinaryPath(p config.Package, extractedPath string) string {
