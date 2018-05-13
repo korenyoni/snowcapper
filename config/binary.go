@@ -1,9 +1,14 @@
 package config
 
+import (
+	"os"
+)
+
 type Binary struct {
 	Name    string
 	Src     string
 	SrcType string
+	Mode    os.FileMode
 }
 
 func (b *Binary) GetBinaryPath() string {

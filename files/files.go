@@ -9,7 +9,7 @@ import (
 func Run(f config.File) error {
 	fmt.Printf("Writing to %s ... \n", f.Path)
 	data := []byte(f.Content)
-	err := ioutil.WriteFile(f.Path, data, 0644)
+	err := ioutil.WriteFile(f.Path, data, f.Mode)
 	if err != nil {
 		return err
 	}

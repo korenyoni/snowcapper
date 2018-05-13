@@ -25,7 +25,7 @@ func (r *Runner) Run() (err error) {
 			if err != nil {
 				return err
 			}
-			err = r.chmodBinary(binaryPath, r.BinaryMode)
+			err = r.chmodBinary(binaryPath, b.Mode)
 			if err != nil {
 				return err
 			}
@@ -76,7 +76,6 @@ func (r *Runner) copyConfigFiles(f config.File) (err error) {
 
 func New(config config.Config) (runner Runner, err error) {
 	return Runner{
-		Config:     &config,
-		BinaryMode: 0700,
+		Config: &config,
 	}, nil
 }
