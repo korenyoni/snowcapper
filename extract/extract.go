@@ -10,32 +10,34 @@ import (
 	"strings"
 )
 
-func Run(p config.Package, src string, target string) error {
-	fmt.Printf("Extracting %s from %s\n", p.Type, src)
-	err, extractedPath := extract(p.Type, src)
+func Run(b config.Binary, downloadPath string) (binaryPath string, err error) {
+	binaryPath = b.GetBinaryPath()
+
+	fmt.Printf("Extracting %s from %s\n", b.SrcType, b.Src)
+	err, extractedPath := extract(b.SrcType, downloadPath)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	fmt.Printf("Copying %s to %s\n", getExtractedBinaryPath(p, extractedPath), target)
-	err = copyToTarget(getExtractedBinaryPath(p, extractedPath), target)
+	fmt.Printf("Copying %s to %s\n", getExtractedBinaryPath(b, extractedPath), binaryPath)
+	err = copyToTarget(getExtractedBinaryPath(b, extractedPath), binaryPath)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	fmt.Printf("Removing %s\n", extractedPath)
 	err = os.RemoveAll(extractedPath)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	fmt.Printf("Removing %s\n", src)
-	err = os.RemoveAll(src)
+	fmt.Printf("Removing %s\n", b.Src)
+	err = os.RemoveAll(b.Src)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return binaryPath, nil
 }
 
 func extract(archiveType string, src string) (error, string) {
@@ -99,6 +101,6 @@ func getExtractedPath(archiveType string, src string) string {
 	return extractedPath
 }
 
-func getExtractedBinaryPath(p config.Package, extractedPath string) string {
-	return extractedPath + "/" + p.Name
+func getExtractedBinaryPath(b config.Binary, extractedPath string) string {
+	return extractedPath + "/" + b.Name
 }

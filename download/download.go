@@ -8,15 +8,15 @@ import (
 	"os"
 )
 
-func Run(p config.Package, target string) error {
-	fmt.Printf("Downloading %s from %s ...\n", p.Name, p.Source)
+func Run(b config.Binary, target string) error {
+	fmt.Printf("Downloading %s from %s ...\n", b.Name, b.Src)
 	out, err := os.Create(target)
 	if err != nil {
 		return err
 	}
 	defer out.Close()
 
-	resp, err := http.Get(p.Source)
+	resp, err := http.Get(b.Src)
 	if err != nil {
 		return err
 	}
@@ -27,6 +27,6 @@ func Run(p config.Package, target string) error {
 		return err
 	}
 
-	fmt.Printf("Successfully downloaded %s to %s\n", p.Name, target)
+	fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
 	return nil
 }

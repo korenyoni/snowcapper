@@ -13,42 +13,45 @@ type Runner struct {
 	BinaryMode os.FileMode
 }
 
-func (r *Runner) Run() error {
+func (r *Runner) Run() (err error) {
 	c := r.Config
 	for _, p := range c.Packages {
-		downloadPath, err := r.download(p)
-		if err != nil {
-			return err
+		for _, b := range p.Binaries {
+			downloadPath, err := r.download(b)
+			if err != nil {
+				return err
+			}
+			binaryPath, err := r.extract(b, downloadPath)
+			if err != nil {
+				return err
+			}
+			err = r.chmodBinary(binaryPath, r.BinaryMode)
+			if err != nil {
+				return err
+			}
 		}
-		binaryPath, err := r.extract(p, downloadPath)
-		if err != nil {
-			return err
-		}
-		err = r.chmodBinary(binaryPath, r.BinaryMode)
-		if err != nil {
-			return err
-		}
-		err = r.copyConfigFiles(p)
-		if err != nil {
-			return err
+		for _, f := range p.Files {
+			err = r.copyConfigFiles(f)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
-func (r *Runner) download(p config.Package) (downloadPath string, err error) {
-	downloadPath = p.GetDownloadPath()
-	err = download.Run(p, downloadPath)
+func (r *Runner) download(b config.Binary) (downloadPath string, err error) {
+	downloadPath = b.GetDownloadPath()
+	err = download.Run(b, downloadPath)
 	if err != nil {
 		return "", err
 	}
 	return downloadPath, nil
 }
 
-func (r *Runner) extract(p config.Package, downloadPath string) (binaryPath string, err error) {
-	binaryPath = p.GetBinaryPath()
-	err = extract.Run(p, downloadPath, binaryPath)
+func (r *Runner) extract(b config.Binary, downloadPath string) (binaryPath string, err error) {
+	binaryPath, err = extract.Run(b, downloadPath)
 	if err != nil {
 		return "", err
 	}
@@ -63,17 +66,17 @@ func (r *Runner) chmodBinary(binaryPath string, mode os.FileMode) (err error) {
 	return nil
 }
 
-func (r *Runner) copyConfigFiles(p config.Package) (err error) {
-	err = files.Run(p)
+func (r *Runner) copyConfigFiles(f config.File) (err error) {
+	err = files.Run(f)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func New(config config.Config) Runner {
+func New(config config.Config) (runner Runner, err error) {
 	return Runner{
 		Config:     &config,
 		BinaryMode: 0700,
-	}
+	}, nil
 }

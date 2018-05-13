@@ -1,3 +1,2 @@
-1. Use Yaml + Bindata for config
-2. Split up config into packages / structs
-3. Add Runner.InitServices
+1. Delegate file copy methods to config.File
+2. Add Runner.InitServices
