@@ -1,2 +1,3 @@
 snowcapper
 .vagrant
+bindata.go
