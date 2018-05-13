@@ -11,10 +11,12 @@ packages:
   - name: vault
     binaries:
       - name: vault
+        mode: 0755
         src: https://releases.hashicorp.com/vault/0.10.0/vault_0.10.0_linux_amd64.zip
         srctype: zip
     files:
       - path: /etc/init.d/vault
+        mode: 0700
         content: |
           #!/sbin/openrc-run
 
