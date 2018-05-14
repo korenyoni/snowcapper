@@ -13,8 +13,8 @@ import (
 func Run(b config.Binary, downloadPath string) (binaryPath string, err error) {
 	binaryPath = b.GetBinaryPath()
 
-	fmt.Printf("Extracting %s from %s\n", b.SrcType, downloadPath)
-	err, extractedPath := extract(b.SrcType, downloadPath)
+	fmt.Printf("Extracting %s from %s\n", b.Format, downloadPath)
+	err, extractedPath := extract(b.Format, downloadPath)
 	if err != nil {
 		return "", err
 	}

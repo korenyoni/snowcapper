@@ -5,10 +5,10 @@ import (
 )
 
 type Binary struct {
-	Name    string
-	Src     string
-	SrcType string
-	Mode    os.FileMode
+	Name   string
+	Src    string
+	Format string
+	Mode   os.FileMode
 }
 
 func (b *Binary) GetBinaryPath() string {
@@ -16,5 +16,5 @@ func (b *Binary) GetBinaryPath() string {
 }
 
 func (b *Binary) GetDownloadPath() string {
-	return "/tmp/" + b.Name + "." + b.SrcType
+	return "/tmp/" + b.Name + "." + b.Format
 }
