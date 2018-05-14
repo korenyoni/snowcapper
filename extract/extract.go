@@ -31,7 +31,7 @@ func Run(b config.Binary, downloadPath string) (binaryPath string, err error) {
 		return "", err
 	}
 
-	fmt.Printf("Removing %s\n", b.Src)
+	fmt.Printf("Removing %s\n", downloadPath)
 	err = os.RemoveAll(b.Src)
 	if err != nil {
 		return "", err
