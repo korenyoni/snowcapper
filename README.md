@@ -58,3 +58,11 @@ packages:
 make get
 make binary
 ```
+
+### To test in an Alpine environment:
+
+```
+make
+```
+
+This builds the binary and provisions an Alpine VM using snowcapper and Vagrant.
