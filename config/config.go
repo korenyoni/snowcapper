@@ -11,7 +11,7 @@ type Config struct {
 
 func (c Config) Validate() error {
 	return validation.ValidateStruct(&c,
-		validation.Field(&c.Packages, validation.Length(1, 0)),
+		validation.Field(&c.Packages, validation.Length(1, 0), validation.Required),
 	)
 }
 
