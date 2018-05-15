@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/go-ozzo/ozzo-validation"
 	"os"
 )
 
@@ -10,9 +11,10 @@ type File struct {
 	Mode    os.FileMode
 }
 
-func NewFile(path string, content string, Mode os.FileMode) (file File, err error) {
-	return File{
-		Path:    path,
-		Content: content,
-	}, nil
+func (f File) Validate() error {
+	return validation.ValidateStruct(&f,
+		validation.Field(&f.Path, validation.Required),
+		validation.Field(&f.Content, validation.Required),
+		validation.Field(&f.Mode, validation.Required),
+	)
 }
