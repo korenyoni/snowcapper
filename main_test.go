@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 	"github.com/yonkornilov/snowcapper/runner"
 	"testing"
 )
@@ -24,8 +25,9 @@ func TestConfigNew(t *testing.T) {
 
 func TestRunnerNew(t *testing.T) {
 	configYaml, _ := Asset("config.yaml")
-	c, _ := config.New(configYaml)
-	_, err := runner.New(c)
+	conf, _ := config.New(configYaml)
+	ctx := context.New(true)
+	_, err := runner.New(&ctx, conf)
 	if err != nil {
 		t.Fatal(fmt.Sprint("Expecting no error, got \n%s", err))
 	}

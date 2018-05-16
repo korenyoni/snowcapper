@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"github.com/mholt/archiver"
 	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 	"io"
 	"os"
 	"strings"
 )
 
-func Run(b config.Binary, downloadPath string) (binaryPath string, err error) {
+func Run(c *context.Context, b config.Binary, downloadPath string) (binaryPath string, err error) {
 	binaryPath = b.GetBinaryPath()
 
 	fmt.Printf("Extracting %s from %s\n", b.Format, downloadPath)

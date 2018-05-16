@@ -3,12 +3,13 @@ package download
 import (
 	"fmt"
 	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 	"io"
 	"net/http"
 	"os"
 )
 
-func Run(b config.Binary, target string) error {
+func Run(c *context.Context, b config.Binary, target string) error {
 	fmt.Printf("Downloading %s from %s ...\n", b.Name, b.Src)
 	out, err := os.Create(target)
 	if err != nil {

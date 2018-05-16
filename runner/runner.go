@@ -2,6 +2,7 @@ package runner
 
 import (
 	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 	"github.com/yonkornilov/snowcapper/download"
 	"github.com/yonkornilov/snowcapper/extract"
 	"github.com/yonkornilov/snowcapper/files"
@@ -11,6 +12,7 @@ import (
 type Runner struct {
 	Config     *config.Config
 	BinaryMode os.FileMode
+	Context    *context.Context
 }
 
 func (r *Runner) Run() (err error) {
@@ -43,7 +45,7 @@ func (r *Runner) Run() (err error) {
 
 func (r *Runner) download(b config.Binary) (downloadPath string, err error) {
 	downloadPath = b.GetDownloadPath()
-	err = download.Run(b, downloadPath)
+	err = download.Run(r.Context, b, downloadPath)
 	if err != nil {
 		return "", err
 	}
@@ -51,7 +53,7 @@ func (r *Runner) download(b config.Binary) (downloadPath string, err error) {
 }
 
 func (r *Runner) extract(b config.Binary, downloadPath string) (binaryPath string, err error) {
-	binaryPath, err = extract.Run(b, downloadPath)
+	binaryPath, err = extract.Run(r.Context, b, downloadPath)
 	if err != nil {
 		return "", err
 	}
@@ -67,15 +69,16 @@ func (r *Runner) chmodBinary(binaryPath string, mode os.FileMode) (err error) {
 }
 
 func (r *Runner) copyConfigFiles(f config.File) (err error) {
-	err = files.Run(f)
+	err = files.Run(r.Context, f)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func New(config config.Config) (runner Runner, err error) {
+func New(context *context.Context, config config.Config) (runner Runner, err error) {
 	return Runner{
-		Config: &config,
+		Context: context,
+		Config:  &config,
 	}, nil
 }
