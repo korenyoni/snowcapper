@@ -39,5 +39,8 @@ func TestRunnerDryRun(t *testing.T) {
 		Context:    &ctx,
 		BinaryMode: 0700,
 	}
-	runner.Run()
+	err := runner.Run()
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
 }
