@@ -14,7 +14,10 @@ func TestExtractDryRun(t *testing.T) {
 		Format: "tar.gz",
 		Mode:   0700,
 	}
-	Run(&ctx, binary, "/tmp/binary.tar.gz")
+	_, err := Run(&ctx, binary, "/tmp/binary.tar.gz")
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
 }
 
 func TestExtractGetExtractedPath(t *testing.T) {
