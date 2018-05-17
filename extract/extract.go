@@ -14,55 +14,89 @@ import (
 func Run(c *context.Context, b config.Binary, downloadPath string) (binaryPath string, err error) {
 	binaryPath = b.GetBinaryPath()
 
-	fmt.Printf("Extracting %s from %s\n", b.Format, downloadPath)
-	err, extractedPath := extract(b.Format, downloadPath)
-	if err != nil {
-		return "", err
-	}
+	if c.IsDryRun {
+		fmt.Printf("DRY-RUN: Extracting %s from %s\n", b.Format, downloadPath)
+		err, extractedPath := extract(c, b.Format, downloadPath)
+		if err != nil {
+			return "", err
+		}
+		fmt.Printf("DRY-RUN: Copying %s to %s\n", getExtractedBinaryPath(b, extractedPath), binaryPath)
+		fmt.Printf("DRY-RUN: Removing %s\n", extractedPath)
+		fmt.Printf("DRY-RUN: Removing %s\n", downloadPath)
+	} else {
+		fmt.Printf("Extracting %s from %s\n", b.Format, downloadPath)
+		err, extractedPath := extract(c, b.Format, downloadPath)
+		if err != nil {
+			return "", err
+		}
 
-	fmt.Printf("Copying %s to %s\n", getExtractedBinaryPath(b, extractedPath), binaryPath)
-	err = copyToTarget(getExtractedBinaryPath(b, extractedPath), binaryPath)
-	if err != nil {
-		return "", err
-	}
+		fmt.Printf("Copying %s to %s\n", getExtractedBinaryPath(b, extractedPath), binaryPath)
+		err = copyToTarget(getExtractedBinaryPath(b, extractedPath), binaryPath)
+		if err != nil {
+			return "", err
+		}
 
-	fmt.Printf("Removing %s\n", extractedPath)
-	err = os.RemoveAll(extractedPath)
-	if err != nil {
-		return "", err
-	}
+		fmt.Printf("Removing %s\n", extractedPath)
+		err = os.RemoveAll(extractedPath)
+		if err != nil {
+			return "", err
+		}
 
-	fmt.Printf("Removing %s\n", downloadPath)
-	err = os.RemoveAll(b.Src)
-	if err != nil {
-		return "", err
+		fmt.Printf("Removing %s\n", downloadPath)
+		err = os.RemoveAll(b.Src)
+		if err != nil {
+			return "", err
+		}
 	}
 
 	return binaryPath, nil
 }
 
-func extract(archiveType string, src string) (error, string) {
+func extract(c *context.Context, archiveType string, src string) (error, string) {
 	extractedPath := getExtractedPath(archiveType, src)
 	var err error
-	switch archiveType {
-	case "zip":
-		err = archiver.Zip.Open(src, extractedPath)
-	case "tar":
-		err = archiver.Tar.Open(src, extractedPath)
-	case "tar.gz":
-		err = archiver.TarGz.Open(src, extractedPath)
-	case "tar.bz2":
-		err = archiver.TarBz2.Open(src, extractedPath)
-	case "tar.xz":
-		err = archiver.TarXZ.Open(src, extractedPath)
-	case "tar.lz4":
-		err = archiver.TarLz4.Open(src, extractedPath)
-	case "tar.sz":
-		err = archiver.TarSz.Open(src, extractedPath)
-	case "rar":
-		err = archiver.Rar.Open(src, extractedPath)
-	default:
-		err = errors.New(fmt.Sprintf("Error: 'Type' must be one of: %s", archiver.SupportedFormats))
+	if c.IsDryRun {
+		switch archiveType {
+		case "zip":
+			err = nil
+		case "tar":
+			err = nil
+		case "tar.gz":
+			err = nil
+		case "tar.bz2":
+			err = nil
+		case "tar.xz":
+			err = nil
+		case "tar.lz4":
+			err = nil
+		case "tar.sz":
+			err = nil
+		case "rar":
+			err = nil
+		default:
+			err = errors.New(fmt.Sprintf("Error: 'Type' must be one of: %s", archiver.SupportedFormats))
+		}
+	} else {
+		switch archiveType {
+		case "zip":
+			err = archiver.Zip.Open(src, extractedPath)
+		case "tar":
+			err = archiver.Tar.Open(src, extractedPath)
+		case "tar.gz":
+			err = archiver.TarGz.Open(src, extractedPath)
+		case "tar.bz2":
+			err = archiver.TarBz2.Open(src, extractedPath)
+		case "tar.xz":
+			err = archiver.TarXZ.Open(src, extractedPath)
+		case "tar.lz4":
+			err = archiver.TarLz4.Open(src, extractedPath)
+		case "tar.sz":
+			err = archiver.TarSz.Open(src, extractedPath)
+		case "rar":
+			err = archiver.Rar.Open(src, extractedPath)
+		default:
+			err = errors.New(fmt.Sprintf("Error: 'Type' must be one of: %s", archiver.SupportedFormats))
+		}
 	}
 
 	if err != nil {
