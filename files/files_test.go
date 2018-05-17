@@ -15,5 +15,8 @@ func TestFilesDryRun(t *testing.T) {
 		echo test
 		`,
 	}
-	Run(&ctx, file)
+	err := Run(&ctx, file)
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
 }
