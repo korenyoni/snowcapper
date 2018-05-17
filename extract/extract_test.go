@@ -16,3 +16,18 @@ func TestExtractDryRun(t *testing.T) {
 	}
 	Run(&ctx, binary, "/tmp/binary.tar.gz")
 }
+
+func TestExtractGetExtractedPath(t *testing.T) {
+	binary := config.Binary{
+		Name:   "test",
+		Src:    "https://test.com/test.tar.gz",
+		Format: "tar.gz",
+		Mode:   0700,
+	}
+	downloadPath := "/tmp/test.tar.gz"
+	extractedPath := getExtractedPath(binary.Format, downloadPath)
+	expectedExtractedPath := "/tmp/test"
+	if extractedPath != expectedExtractedPath {
+		t.Fatalf("Expected %s, got %s", expectedExtractedPath, extractedPath)
+	}
+}
