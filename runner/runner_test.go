@@ -35,9 +35,8 @@ func TestRunnerDryRun(t *testing.T) {
 		Packages: packages,
 	}
 	runner := Runner{
-		Config:     &conf,
-		Context:    &ctx,
-		BinaryMode: 0700,
+		Config:  &conf,
+		Context: &ctx,
 	}
 	err := runner.Run()
 	if err != nil {

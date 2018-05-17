@@ -10,9 +10,8 @@ import (
 )
 
 type Runner struct {
-	Config     *config.Config
-	BinaryMode os.FileMode
-	Context    *context.Context
+	Config  *config.Config
+	Context *context.Context
 }
 
 func (r *Runner) Run() (err error) {
