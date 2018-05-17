@@ -31,3 +31,19 @@ func TestExtractGetExtractedPath(t *testing.T) {
 		t.Fatalf("Expected %s, got %s", expectedExtractedPath, extractedPath)
 	}
 }
+
+func TestExtractGetExtractedBinaryPath(t *testing.T) {
+	binary := config.Binary{
+		Name:   "test",
+		Src:    "https://test.com/test.tar.gz",
+		Format: "tar.gz",
+		Mode:   0700,
+	}
+	downloadPath := "/tmp/test.tar.gz"
+	extractedPath := getExtractedPath(binary.Format, downloadPath)
+	extractedBinaryPath := getExtractedBinaryPath(binary, extractedPath)
+	expectedExtractedBinaryPath := "/tmp/test/test"
+	if extractedBinaryPath != expectedExtractedBinaryPath {
+		t.Fatalf("Expected %s, got %s", expectedExtractedBinaryPath, extractedBinaryPath)
+	}
+}
