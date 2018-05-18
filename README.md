@@ -50,6 +50,8 @@ packages:
                                   --exec $DAEMON
                   eend $?
           }
+    inits:
+      - type: openrc
 ```
 
 ### Usage:
