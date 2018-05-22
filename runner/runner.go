@@ -62,11 +62,11 @@ func (r *Runner) extract(b config.Binary, downloadPath string) (binaryPath strin
 func (r *Runner) chmodBinary(binaryPath string, mode os.FileMode) (err error) {
 	if r.Context.IsDryRun {
 		// Do nothing
-	} else {
-		err = os.Chmod(binaryPath, mode)
-		if err != nil {
-			return err
-		}
+		return nil
+	}
+	err = os.Chmod(binaryPath, mode)
+	if err != nil {
+		return err
 	}
 	return nil
 }
