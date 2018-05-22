@@ -20,6 +20,20 @@ func TestExtractDryRun(t *testing.T) {
 	}
 }
 
+func TestExtractDryRunUnsupported(t *testing.T) {
+	ctx := context.New(true)
+	binary := config.Binary{
+		Name:   "test",
+		Src:    "https://test.com/test.tar.fake",
+		Format: "tar.fake",
+		Mode:   0700,
+	}
+	_, err := Run(&ctx, binary, "/tmp/binary.tar.fake")
+	if err == nil {
+		t.Fatalf("Expected error, got nothing")
+	}
+}
+
 func TestExtractGetExtractedPath(t *testing.T) {
 	binary := config.Binary{
 		Name:   "test",
