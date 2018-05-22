@@ -13,27 +13,26 @@ func Run(c *context.Context, b config.Binary, target string) error {
 	if c.IsDryRun {
 		fmt.Printf("DRY-RUN: Downloading %s from %s ...\n", b.Name, b.Src)
 		fmt.Printf("DRY-RUN: Successfully downloaded %s to %s\n", b.Name, target)
-	} else {
-		fmt.Printf("Downloading %s from %s ...\n", b.Name, b.Src)
-		out, err := os.Create(target)
-		if err != nil {
-			return err
-		}
-		defer out.Close()
-
-		resp, err := http.Get(b.Src)
-		if err != nil {
-			return err
-		}
-		defer resp.Body.Close()
-
-		_, err = io.Copy(out, resp.Body)
-		if err != nil {
-			return err
-		}
-
-		fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
-
+		return nil
 	}
+	fmt.Printf("Downloading %s from %s ...\n", b.Name, b.Src)
+	out, err := os.Create(target)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	resp, err := http.Get(b.Src)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
 	return nil
 }
