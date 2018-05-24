@@ -1,10 +1,10 @@
 package init
 
 import (
-	"errors"
 	"fmt"
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
+	"os/exec"
 )
 
 func Run(c *context.Context, p config.Package) error {
@@ -13,12 +13,34 @@ func Run(c *context.Context, p config.Package) error {
 		fmt.Printf("DRY-RUN: Done.\n")
 		return nil
 	}
-	fmt.Printf("Initializing %s via \n", p.Name, "")
-	err := errors.New("Empty")
-	if err != nil {
-		return err
+	for _, i := range p.Inits {
+		fmt.Printf("Initializing %s with init type %s and content %s\n", p.Name, i.Type, i.Content)
+		var out string
+		var err error
+		if i.Type == config.Command {
+			out, err = initCommand(i)
+		}
+		out, err = initOpenRC(i)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("Output: %s\n", out)
 	}
-
-	fmt.Printf("Done.\n")
 	return nil
+}
+
+func initCommand(i config.Init) (string, error) {
+	out, err := exec.Command(i.Content).Output()
+	if err != nil {
+		return "", err
+	}
+	return string(out), nil
+}
+
+func initOpenRC(i config.Init) (string, error) {
+	out, err := exec.Command("rc-update add " + i.Content).Output()
+	if err != nil {
+		return "", err
+	}
+	return string(out), nil
 }
