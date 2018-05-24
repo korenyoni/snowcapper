@@ -57,24 +57,7 @@ func extract(c *context.Context, archiveType string, src string) (error, string)
 	extractedPath := getExtractedPath(archiveType, src)
 	var err error
 	if c.IsDryRun {
-		switch archiveType {
-		case "zip":
-			err = nil
-		case "tar":
-			err = nil
-		case "tar.gz":
-			err = nil
-		case "tar.bz2":
-			err = nil
-		case "tar.xz":
-			err = nil
-		case "tar.lz4":
-			err = nil
-		case "tar.sz":
-			err = nil
-		case "rar":
-			err = nil
-		default:
+		if archiver.SupportedFormats[getArchiverFormat(archiveType)] == nil {
 			err = errors.New(fmt.Sprintf("Error: 'Type' must be one of: %s", archiver.SupportedFormats))
 		}
 		if err != nil {
@@ -82,24 +65,7 @@ func extract(c *context.Context, archiveType string, src string) (error, string)
 		}
 		return nil, extractedPath
 	}
-	switch archiveType {
-	case "zip":
-		err = archiver.Zip.Open(src, extractedPath)
-	case "tar":
-		err = archiver.Tar.Open(src, extractedPath)
-	case "tar.gz":
-		err = archiver.TarGz.Open(src, extractedPath)
-	case "tar.bz2":
-		err = archiver.TarBz2.Open(src, extractedPath)
-	case "tar.xz":
-		err = archiver.TarXZ.Open(src, extractedPath)
-	case "tar.lz4":
-		err = archiver.TarLz4.Open(src, extractedPath)
-	case "tar.sz":
-		err = archiver.TarSz.Open(src, extractedPath)
-	case "rar":
-		err = archiver.Rar.Open(src, extractedPath)
-	default:
+	if archiver.SupportedFormats[archiveType] == nil {
 		err = errors.New(fmt.Sprintf("Error: 'Type' must be one of: %s", archiver.SupportedFormats))
 	}
 
@@ -133,6 +99,24 @@ func copyToTarget(src string, target string) error {
 	}
 
 	return nil
+}
+
+func getArchiverFormat(archiveType string) string {
+	if archiveType == "tar" {
+		return "Tar"
+	}
+	if archiveType == "zip" {
+		return "Zip"
+	}
+	if archiveType == "rar" {
+		return "Rar"
+	}
+	if archiveType == "tar.xz" {
+		return "TarXZ"
+	}
+	archiverFormat := strings.Replace(archiveType, "tar.", "", 1)
+	archiverFormat = strings.Title(archiverFormat)
+	return "Tar" + archiverFormat
 }
 
 func getExtractedPath(archiveType string, src string) string {
