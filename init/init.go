@@ -9,7 +9,7 @@ import (
 
 func Run(c *context.Context, p config.Package) error {
 	if c.IsDryRun {
-		fmt.Printf("DRY-RUN: Initializing %s via \n", p.Name, "")
+		fmt.Printf("DRY-RUN: Initializing %s via \n", p.Name)
 		fmt.Printf("DRY-RUN: Done.\n")
 		return nil
 	}
