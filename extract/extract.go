@@ -68,7 +68,10 @@ func extract(c *context.Context, archiveType string, src string) (error, string)
 	if archiver.SupportedFormats[getArchiverFormat(archiveType)] == nil {
 		err = errors.New(fmt.Sprintf("Error: 'Type' must be one of: %s", archiver.SupportedFormats))
 	}
-
+	if err != nil {
+		return err, ""
+	}
+	err = archiver.SupportedFormats[getArchiverFormat(archiveType)].Open(src, extractedPath)
 	if err != nil {
 		return err, ""
 	}
