@@ -41,3 +41,8 @@ packages:
                                   --exec $DAEMON
                   eend $?
           }
+    inits:
+      - type: openrc
+        content: vault
+      - type: command
+        content: echo vault is installed.
