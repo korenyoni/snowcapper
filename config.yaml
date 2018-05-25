@@ -41,3 +41,6 @@ packages:
                                   --exec $DAEMON
                   eend $?
           }
+    inits:
+      - type: openrc
+        content: vault
