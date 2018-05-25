@@ -5,6 +5,7 @@ import (
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
 	"os/exec"
+	"strings"
 )
 
 func Run(c *context.Context, p config.Package) error {
@@ -19,10 +20,14 @@ func Run(c *context.Context, p config.Package) error {
 		var err error
 		if i.Type == config.Command {
 			out, err = initCommand(i)
-		}
-		out, err = initOpenRC(i)
-		if err != nil {
-			return err
+			if err != nil {
+				return err
+			}
+		} else {
+			out, err = initOpenRC(i)
+			if err != nil {
+				return err
+			}
 		}
 		fmt.Printf("Output: %s\n", out)
 	}
@@ -30,7 +35,8 @@ func Run(c *context.Context, p config.Package) error {
 }
 
 func initCommand(i config.Init) (string, error) {
-	out, err := exec.Command(i.Content).Output()
+	splitContent := strings.Split(i.Content, " ")
+	out, err := exec.Command(splitContent[0], splitContent[1:]...).Output()
 	if err != nil {
 		return "", err
 	}
@@ -38,7 +44,7 @@ func initCommand(i config.Init) (string, error) {
 }
 
 func initOpenRC(i config.Init) (string, error) {
-	out, err := exec.Command("rc-update add " + i.Content).Output()
+	out, err := exec.Command("/sbin/rc-update", "add", i.Content).Output()
 	if err != nil {
 		return "", err
 	}
