@@ -52,6 +52,7 @@ packages:
           }
     inits:
       - type: openrc
+        content: vault
 ```
 
 ### Usage:
