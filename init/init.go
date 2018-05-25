@@ -53,7 +53,7 @@ func initCommand(c *context.Context, i config.Init) (string, error) {
 }
 
 func initOpenRC(c *context.Context, i config.Init) (string, error) {
-	args := [...]string{"/sbin/rc-update", "add", i.Content}
+	args := [...]string{"rc-update", "add", i.Content}
 	if c.IsDryRun {
 		return fmt.Sprintf("%s", args), nil
 	}
