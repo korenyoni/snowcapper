@@ -10,13 +10,12 @@ import (
 )
 
 func Run(c *context.Context, p config.Package) error {
-	if c.IsDryRun {
-		fmt.Printf("DRY-RUN: Initializing %s via \n", p.Name)
-		fmt.Printf("DRY-RUN: Done.\n")
-		return nil
-	}
 	for _, i := range p.Inits {
-		fmt.Printf("Initializing %s with init type %s and content %s\n", p.Name, i.Type, i.Content)
+		if c.IsDryRun {
+			fmt.Printf("DRY-RUN: Initializing %s with init type %s and content %s\n", p.Name, i.Type, i.Content)
+		} else {
+			fmt.Printf("Initializing %s with init type %s and content %s\n", p.Name, i.Type, i.Content)
+		}
 		var out string
 		var err error
 		if i.Type == config.Command {
@@ -32,7 +31,11 @@ func Run(c *context.Context, p config.Package) error {
 		} else {
 			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
-		fmt.Printf("Output: %s\n", out)
+		if c.IsDryRun {
+			fmt.Printf("DRY-RUN: Output: %s\n", out)
+		} else {
+			fmt.Printf("Output: %s\n", out)
+		}
 	}
 	return nil
 }
