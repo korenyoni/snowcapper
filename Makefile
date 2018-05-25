@@ -1,6 +1,6 @@
 .PHONY : binary vagrant clean
 
-default: binary vagrant
+default: get binary vagrant
 
 get:
 	go get -u github.com/tmthrgd/go-bindata/...
