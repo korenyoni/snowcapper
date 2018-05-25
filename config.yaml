@@ -44,3 +44,5 @@ packages:
     inits:
       - type: openrc
         content: vault
+      - type: command
+        content: echo vault is installed.
