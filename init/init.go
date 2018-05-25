@@ -1,6 +1,7 @@
 package init
 
 import (
+	"errors"
 	"fmt"
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -19,23 +20,28 @@ func Run(c *context.Context, p config.Package) error {
 		var out string
 		var err error
 		if i.Type == config.Command {
-			out, err = initCommand(i)
+			out, err = initCommand(c, i)
+			if err != nil {
+				return err
+			}
+		} else if i.Type == config.OpenRC {
+			out, err = initOpenRC(c, i)
 			if err != nil {
 				return err
 			}
 		} else {
-			out, err = initOpenRC(i)
-			if err != nil {
-				return err
-			}
+			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
 		fmt.Printf("Output: %s\n", out)
 	}
 	return nil
 }
 
-func initCommand(i config.Init) (string, error) {
+func initCommand(c *context.Context, i config.Init) (string, error) {
 	splitContent := strings.Split(i.Content, " ")
+	if c.IsDryRun {
+		return fmt.Sprintf("%s", splitContent), nil
+	}
 	out, err := exec.Command(splitContent[0], splitContent[1:]...).Output()
 	if err != nil {
 		return "", err
@@ -43,8 +49,12 @@ func initCommand(i config.Init) (string, error) {
 	return string(out), nil
 }
 
-func initOpenRC(i config.Init) (string, error) {
-	out, err := exec.Command("/sbin/rc-update", "add", i.Content).Output()
+func initOpenRC(c *context.Context, i config.Init) (string, error) {
+	args := [...]string{"/sbin/rc-update", "add", i.Content}
+	if c.IsDryRun {
+		return fmt.Sprintf("%s", args), nil
+	}
+	out, err := exec.Command(args[0], args[1:]...).Output()
 	if err != nil {
 		return "", err
 	}
