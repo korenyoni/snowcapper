@@ -7,6 +7,7 @@ import (
 	"github.com/yonkornilov/snowcapper/extract"
 	"github.com/yonkornilov/snowcapper/files"
 	"github.com/yonkornilov/snowcapper/inits"
+	"github.com/yonkornilov/snowcapper/services"
 	"os"
 )
 
@@ -37,6 +38,10 @@ func (r *Runner) Run() (err error) {
 			if err != nil {
 				return err
 			}
+		}
+		err = r.applyServices(p)
+		if err != nil {
+			return err
 		}
 		err = r.applyInits(p)
 		if err != nil {
@@ -77,6 +82,14 @@ func (r *Runner) chmodBinary(binaryPath string, mode os.FileMode) (err error) {
 
 func (r *Runner) copyConfigFiles(f config.File) (err error) {
 	err = files.Run(r.Context, f)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *Runner) applyServices(p config.Package) (err error) {
+	err = services.Run(r.Context, p)
 	if err != nil {
 		return err
 	}
