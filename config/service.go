@@ -5,7 +5,7 @@ import (
 )
 
 type Service struct {
-	Binary Binary
+	Binary string
 	Args   []string
 }
 
