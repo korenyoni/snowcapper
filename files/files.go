@@ -5,6 +5,8 @@ import (
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
 func Run(c *context.Context, f config.File) error {
@@ -15,8 +17,12 @@ func Run(c *context.Context, f config.File) error {
 		return nil
 	}
 	fmt.Printf("Writing to %s ... \n", f.Path)
+	err := os.MkdirAll(filepath.Dir(f.Path), f.Mode)
+	if err != nil {
+		return err
+	}
 	data := []byte(f.Content)
-	err := ioutil.WriteFile(f.Path, data, f.Mode)
+	err = ioutil.WriteFile(f.Path, data, f.Mode)
 	if err != nil {
 		return err
 	}

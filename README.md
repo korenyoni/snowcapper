@@ -15,41 +15,22 @@ packages:
         src: https://releases.hashicorp.com/vault/0.10.0/vault_0.10.0_linux_amd64.zip
         format: zip
     files:
-      - path: /etc/init.d/vault
+      - path: /etc/vault/config.hcl
         mode: 0700
         content: |
-          #!/sbin/openrc-run
-
-          NAME=vault
-          DAEMON=/usr/bin/$NAME
-
-          depend() {
-                  need net
-                  after firewall
+          storage "file" {
+            path    = "/mnt/vault/data"
           }
 
-          start() {
-                  ebegin "Starting ${NAME}"
-                          start-stop-daemon --start \
-                                  --background \
-                                  --make-pidfile --pidfile /var/run/$NAME.pid \
-                                  --stderr "/var/log/$NAME.log" \
-                                  --stdout "/var/log/$NAME.log" \
-                                  --user $USER \
-                                  --exec $DAEMON \
-                                  -- \
-                                  -config /etc/vault/config.hcl
-                  eend $?
+          listener "tcp" {
+            address     = "0.0.0.0:8200"
+            tls_disable = 1
           }
-
-          stop () {
-                  ebegin "Stopping ${NAME}"
-                          start-stop-daemon --stop \
-                                  --pidfile /var/run/$NAME.pid \
-                                  --user $USER \
-                                  --exec $DAEMON
-                  eend $?
-          }
+    services:
+      - binary: vault
+        args:
+          - "server"
+          - "-config /etc/vault/config.hcl"
     inits:
       - type: openrc
         content: vault
