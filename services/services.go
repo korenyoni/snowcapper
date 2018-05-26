@@ -12,8 +12,7 @@ const (
 	argSpacing      string = "                        "
 	binaryTemplate  string = "$$BINARY"
 	ArgsTemplate    string = "$$ARGS"
-	serviceTemplate string = `
-#!/sbin/openrc-run
+	serviceTemplate string = `#!/sbin/openrc-run
 
 NAME=$$BINARY
 DAEMON=/usr/bin/$NAME
