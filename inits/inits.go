@@ -28,6 +28,10 @@ func Run(c *context.Context, p config.Package) error {
 			if err != nil {
 				return err
 			}
+			out, err = startOpenRC(c, i)
+			if err != nil {
+				return err
+			}
 		} else {
 			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
@@ -54,6 +58,18 @@ func initCommand(c *context.Context, i config.Init) (string, error) {
 
 func initOpenRC(c *context.Context, i config.Init) (string, error) {
 	args := [...]string{"rc-update", "add", i.Content}
+	if c.IsDryRun {
+		return fmt.Sprintf("%s", args), nil
+	}
+	out, err := exec.Command(args[0], args[1:]...).Output()
+	if err != nil {
+		return "", err
+	}
+	return string(out), nil
+}
+
+func startOpenRC(c *context.Context, i config.Init) (string, error) {
+	args := [...]string{"rc-service", i.Content, "start"}
 	if c.IsDryRun {
 		return fmt.Sprintf("%s", args), nil
 	}

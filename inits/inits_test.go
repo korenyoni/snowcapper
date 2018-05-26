@@ -40,3 +40,20 @@ func TestInitOpenRC(t *testing.T) {
 		t.Fatalf("expected: %s, got %s", expectedOut, out)
 	}
 }
+
+func TestStartOpenRC(t *testing.T) {
+	ctx := context.New(true)
+	init := config.Init{
+		Type:    "openrc",
+		Content: "vault",
+	}
+	args := [...]string{"rc-service", "vault", "start"}
+	expectedOut := fmt.Sprintf("%s", args)
+	out, err := startOpenRC(&ctx, init)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if out != expectedOut {
+		t.Fatalf("expected: %s, got %s", expectedOut, out)
+	}
+}
