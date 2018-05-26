@@ -6,7 +6,7 @@ import (
 	"github.com/yonkornilov/snowcapper/download"
 	"github.com/yonkornilov/snowcapper/extract"
 	"github.com/yonkornilov/snowcapper/files"
-	inits "github.com/yonkornilov/snowcapper/init"
+	"github.com/yonkornilov/snowcapper/inits"
 	"os"
 )
 
