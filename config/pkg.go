@@ -19,7 +19,7 @@ func (p Package) Validate() error {
 		validation.Field(&p.Name, validation.Required),
 		validation.Field(&p.Binaries, validation.Length(1, 0), validation.Required),
 		validation.Field(&p.Files, validation.Length(1, 0)),
-		validation.Field(&p.Files, validation.Length(1, 0)),
+		validation.Field(&p.Services, validation.Length(1, 0)),
 		validation.Field(&p.Inits, validation.Length(0, 0), validation.By(checkInitContent)),
 	)
 }
