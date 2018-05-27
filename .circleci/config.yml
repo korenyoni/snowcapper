@@ -30,8 +30,8 @@ jobs:
       - run: touch /run/openrc/softlevel
       - attach_workspace:
           at: /usr/bin/
-      - run: sudo snowcapper
       - run: openrc
+      - run: sudo snowcapper
       - run: VAULT_ADDR=http://127.0.0.1:8200 vault status 2>&1 | grep "server is not yet initialized"
 
 workflows:
