@@ -30,7 +30,7 @@ func TestInitOpenRC(t *testing.T) {
 		Type:    "openrc",
 		Content: "vault",
 	}
-	args := [...]string{"rc-update", "add", "vault"}
+	args := [...]string{"rc-update", "add", "vault", "default"}
 	expectedOut := fmt.Sprintf("%s", args)
 	out, err := initOpenRC(&ctx, init)
 	if err != nil {
