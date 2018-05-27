@@ -28,6 +28,7 @@ jobs:
       - run: apk add sudo
       - run: mkdir /run/openrc
       - run: touch /run/openrc/softlevel
+      - run: openrc
       - attach_workspace:
           at: /usr/bin/
       - run: sudo snowcapper
