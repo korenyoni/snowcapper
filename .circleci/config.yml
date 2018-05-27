@@ -22,10 +22,13 @@ jobs:
             - snowcapper
   test-alpine:
     docker:
-      - image: alpine:3.7
+      - image: dockage/alpine-openrc:3.7
     steps:
       - run: apk update
-      - run: apk add ca-certificates sudo openrc
+      - run: apk add sudo
+      - run: mkdir /run/openrc
+      - run: touch /run/openrc/softlevel
+      - run: openrc
       - attach_workspace:
           at: /usr/bin/
       - run: sudo snowcapper
