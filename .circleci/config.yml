@@ -28,7 +28,7 @@ jobs:
       - run: apk add sudo
       - run: mkdir /run/openrc
       - run: touch /run/openrc/softlevel
-      - run: sed -i 's/#rc_crashed_stop=NO/rc_crashed_stop=YES/g' /etc/rc.conf
+      - run: sed -i 's/rc_crashed_stop=NO/rc_crashed_stop=YES/g' /etc/rc.conf
       - attach_workspace:
           at: /usr/bin/
       - run: openrc
