@@ -17,11 +17,6 @@ const (
 NAME=$$BINARY
 DAEMON=/usr/bin/$NAME
 
-depend() {
-        need net
-        after firewall
-}
-
 start() {
         ebegin "Starting ${NAME}"
                 start-stop-daemon --start \
