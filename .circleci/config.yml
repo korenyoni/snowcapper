@@ -31,7 +31,7 @@ jobs:
       - attach_workspace:
           at: /usr/bin/
       - run: openrc default
-			- run: sleep 3
+      - run: sleep 3
       - run: sudo snowcapper
       - run: VAULT_ADDR=http://127.0.0.1:8200 vault status 2>&1 | grep "server is not yet initialized"
 
