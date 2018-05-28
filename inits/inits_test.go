@@ -47,7 +47,7 @@ func TestStartOpenRC(t *testing.T) {
 		Type:    "openrc",
 		Content: "vault",
 	}
-	args := [...]string{"rc-service", "vault", "start"}
+	args := [...]string{"openrc"}
 	expectedOut := fmt.Sprintf("%s", args)
 	out, err := startOpenRC(&ctx, init)
 	if err != nil {
