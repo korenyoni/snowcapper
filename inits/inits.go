@@ -69,7 +69,7 @@ func initOpenRC(c *context.Context, i config.Init) (string, error) {
 }
 
 func startOpenRC(c *context.Context, i config.Init) (string, error) {
-	args := [...]string{"openrc"}
+	args := [...]string{"rc-service", i.Content, "start"}
 	if c.IsDryRun {
 		return fmt.Sprintf("%s", args), nil
 	}
