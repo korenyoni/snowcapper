@@ -17,11 +17,9 @@ const (
 NAME=$$BINARY
 DAEMON=/usr/bin/$NAME
 
-supervisor=s6
-
 start() {
         ebegin "Starting ${NAME}"
-                start-stop-daemon --start \
+                supervise-daemon --start \
                         --background \
                         --make-pidfile --pidfile /var/run/$NAME.pid \
                         --stderr "/var/log/$NAME.log" \

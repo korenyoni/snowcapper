@@ -26,8 +26,7 @@ jobs:
         command: /sbin/init
     steps:
       - run: apk update
-      - run: apk add sudo s6
-      - run: rc-update add s6-svscan boot
+      - run: apk add sudo
       - attach_workspace:
           at: /usr/bin/
       - run: sudo snowcapper
