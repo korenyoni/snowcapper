@@ -23,7 +23,7 @@ jobs:
   test-alpine:
     docker:
       - image: dockage/alpine-openrc:3.7
-      - command: /sbin/init
+        command: /sbin/init
     steps:
       - run: apk update
       - run: apk add sudo
