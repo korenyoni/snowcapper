@@ -31,7 +31,7 @@ jobs:
       - run: sed -i 's/rc_crashed_stop=NO/rc_crashed_stop=YES/g' /etc/rc.conf
       - attach_workspace:
           at: /usr/bin/
-      - run: openrc
+      - run: openrc default
       - run: sudo snowcapper
       - run: VAULT_ADDR=http://127.0.0.1:8200 vault status 2>&1 | grep "server is not yet initialized"
 
