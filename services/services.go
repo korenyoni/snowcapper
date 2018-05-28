@@ -17,6 +17,8 @@ const (
 NAME=$$BINARY
 DAEMON=/usr/bin/$NAME
 
+supervisor=s6
+
 start() {
         ebegin "Starting ${NAME}"
                 start-stop-daemon --start \
