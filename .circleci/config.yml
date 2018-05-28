@@ -24,11 +24,11 @@ jobs:
     docker:
       - image: dockage/alpine-openrc:3.7
     steps:
+      - run: /sbin/init
       - run: apk update
       - run: apk add sudo
       - attach_workspace:
           at: /usr/bin/
-      - run: /sbin/init
       - run: sudo snowcapper
       - run: VAULT_ADDR=http://127.0.0.1:8200 vault status 2>&1 | grep "server is not yet initialized"
 
