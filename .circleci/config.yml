@@ -24,7 +24,7 @@ jobs:
     docker:
       - image: dockage/alpine-openrc:3.7
     steps:
-      - run: /sbin/init
+      - run: exec /sbin/init
       - run: apk update
       - run: apk add sudo
       - attach_workspace:
