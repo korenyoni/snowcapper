@@ -28,7 +28,7 @@ func Run(c *context.Context, p config.Package) error {
 			if err != nil {
 				return err
 			}
-			out, err = startOpenRC(c, i)
+			err = startOpenRC(c, i)
 			if err != nil {
 				return err
 			}
@@ -68,14 +68,14 @@ func initOpenRC(c *context.Context, i config.Init) (string, error) {
 	return string(out), nil
 }
 
-func startOpenRC(c *context.Context, i config.Init) (string, error) {
+func startOpenRC(c *context.Context, i config.Init) error {
 	args := [...]string{"rc-service", i.Content, "start"}
 	if c.IsDryRun {
-		return fmt.Sprintf("%s", args), nil
+		return nil
 	}
-	out, err := exec.Command(args[0], args[1:]...).Output()
+	err := exec.Command(args[0], args[1:]...).Start()
 	if err != nil {
-		return "", err
+		return err
 	}
-	return string(out), nil
+	return nil
 }

@@ -9,34 +9,18 @@ import (
 )
 
 const (
-	argSpacing      string = "                        "
 	binaryTemplate  string = "$$BINARY"
 	ArgsTemplate    string = "$$ARGS"
 	serviceTemplate string = `#!/sbin/openrc-run
 
 NAME=$$BINARY
-DAEMON=/usr/bin/$NAME
 
-start() {
-        ebegin "Starting ${NAME}"
-                supervise-daemon --start \
-                        --background \
-                        --make-pidfile --pidfile /var/run/$NAME.pid \
-                        --stderr "/var/log/$NAME.log" \
-                        --stdout "/var/log/$NAME.log" \
-                        --exec $DAEMON \
-                        -- \$$ARGS
-        eend $?
-}
-
-stop () {
-        ebegin "Stopping ${NAME}"
-                start-stop-daemon --stop \
-                        --pidfile /var/run/$NAME.pid \
-                        --exec $DAEMON
-        eend $?
-}
-	`
+supervisor=supervise-daemon
+command=$NAME
+command_args="$$ARGS"
+command_background="Yes"
+pidfile=/var/run/$NAME
+`
 )
 
 func Run(c *context.Context, p config.Package) error {
@@ -52,8 +36,9 @@ func Run(c *context.Context, p config.Package) error {
 func createService(c *context.Context, s config.Service) error {
 	var argsReplace string
 	for _, arg := range s.Args {
-		argsReplace = argsReplace + "\n" + argSpacing + arg + "\\"
+		argsReplace = argsReplace + arg + " "
 	}
+	argsReplace = strings.TrimRight(argsReplace, " ")
 	serviceContent := serviceTemplate
 	serviceContent = strings.Replace(serviceContent, binaryTemplate, s.Binary, 1)
 	serviceContent = strings.Replace(serviceContent, ArgsTemplate, argsReplace, 1)
