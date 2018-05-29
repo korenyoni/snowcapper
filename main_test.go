@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
 	"github.com/yonkornilov/snowcapper/runner"
-	"testing"
 )
 
 func TestConfigBinData(t *testing.T) {

@@ -2,9 +2,10 @@ package inits
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
-	"testing"
 )
 
 func TestInitCommand(t *testing.T) {

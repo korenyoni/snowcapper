@@ -3,10 +3,11 @@ package inits
 import (
 	"errors"
 	"fmt"
-	"github.com/yonkornilov/snowcapper/config"
-	"github.com/yonkornilov/snowcapper/context"
 	"os/exec"
 	"strings"
+
+	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 )
 
 func Run(c *context.Context, p config.Package) error {

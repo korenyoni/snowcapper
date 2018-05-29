@@ -1,6 +1,8 @@
 package runner
 
 import (
+	"os"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
 	"github.com/yonkornilov/snowcapper/download"
@@ -8,7 +10,6 @@ import (
 	"github.com/yonkornilov/snowcapper/files"
 	"github.com/yonkornilov/snowcapper/inits"
 	"github.com/yonkornilov/snowcapper/services"
-	"os"
 )
 
 type Runner struct {

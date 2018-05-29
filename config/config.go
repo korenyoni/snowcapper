@@ -3,8 +3,10 @@ package config
 import (
 	"errors"
 	"fmt"
-	"github.com/go-ozzo/ozzo-validation"
+
 	"gopkg.in/yaml.v2"
+
+	"github.com/go-ozzo/ozzo-validation"
 )
 
 type Config struct {

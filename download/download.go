@@ -2,11 +2,12 @@ package download
 
 import (
 	"fmt"
-	"github.com/yonkornilov/snowcapper/config"
-	"github.com/yonkornilov/snowcapper/context"
 	"io"
 	"net/http"
 	"os"
+
+	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 )
 
 func Run(c *context.Context, b config.Binary, target string) error {

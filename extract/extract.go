@@ -3,12 +3,13 @@ package extract
 import (
 	"errors"
 	"fmt"
-	"github.com/mholt/archiver"
-	"github.com/yonkornilov/snowcapper/config"
-	"github.com/yonkornilov/snowcapper/context"
 	"io"
 	"os"
 	"strings"
+
+	"github.com/mholt/archiver"
+	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 )
 
 func Run(c *context.Context, b config.Binary, downloadPath string) (binaryPath string, err error) {

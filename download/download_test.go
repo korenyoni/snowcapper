@@ -1,9 +1,10 @@
 package download
 
 import (
+	"testing"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
-	"testing"
 )
 
 func TestDownloadDryRun(t *testing.T) {

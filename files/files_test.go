@@ -1,9 +1,10 @@
 package files
 
 import (
+	"testing"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
-	"testing"
 )
 
 func TestFilesDryRun(t *testing.T) {
