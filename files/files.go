@@ -2,11 +2,12 @@ package files
 
 import (
 	"fmt"
-	"github.com/yonkornilov/snowcapper/config"
-	"github.com/yonkornilov/snowcapper/context"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 )
 
 func Run(c *context.Context, f config.File) error {

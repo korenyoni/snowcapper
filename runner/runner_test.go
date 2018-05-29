@@ -1,9 +1,10 @@
 package runner
 
 import (
+	"testing"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
-	"testing"
 )
 
 func TestRunnerDryRun(t *testing.T) {

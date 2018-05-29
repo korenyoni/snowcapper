@@ -2,10 +2,11 @@ package services
 
 import (
 	"fmt"
-	"github.com/yonkornilov/snowcapper/config"
-	"github.com/yonkornilov/snowcapper/context"
 	"io/ioutil"
 	"strings"
+
+	"github.com/yonkornilov/snowcapper/config"
+	"github.com/yonkornilov/snowcapper/context"
 )
 
 const (

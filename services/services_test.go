@@ -1,9 +1,10 @@
 package services
 
 import (
+	"testing"
+
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
-	"testing"
 )
 
 func TestServicesDryRun(t *testing.T) {

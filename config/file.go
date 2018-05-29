@@ -1,8 +1,9 @@
 package config
 
 import (
-	"github.com/go-ozzo/ozzo-validation"
 	"os"
+
+	"github.com/go-ozzo/ozzo-validation"
 )
 
 type File struct {
