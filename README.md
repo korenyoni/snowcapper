@@ -41,6 +41,7 @@ packages:
 ```
 make get
 make binary
+sudo ./snowcapper
 ```
 
 ### To test in an Alpine environment:
