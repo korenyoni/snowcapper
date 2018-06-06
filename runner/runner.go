@@ -2,6 +2,7 @@ package runner
 
 import (
 	"os"
+	"regexp"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -21,11 +22,11 @@ func (r *Runner) Run() (err error) {
 	c := r.Config
 	for _, p := range c.Packages {
 		for _, b := range p.Binaries {
-			downloadPath, err := r.download(b)
+			sourcePath, err := r.getBinary(b)
 			if err != nil {
 				return err
 			}
-			binaryPath, err := r.extract(b, downloadPath)
+			binaryPath, err := r.extract(b, sourcePath)
 			if err != nil {
 				return err
 			}
@@ -52,17 +53,23 @@ func (r *Runner) Run() (err error) {
 	return nil
 }
 
-func (r *Runner) download(b config.Binary) (downloadPath string, err error) {
-	downloadPath = b.GetDownloadPath()
-	err = download.Run(r.Context, b, downloadPath)
+func (r *Runner) getBinary(b config.Binary) (sourcePath string, err error) {
+	sourcePath = b.GetDownloadPath()
+	remoteExp, err := regexp.Compile(`(http|https)://.*`)
 	if err != nil {
 		return "", err
 	}
-	return downloadPath, nil
+	if remoteExp.MatchString(b.Src) {
+		err = download.Run(r.Context, b, sourcePath)
+		if err != nil {
+			return "", err
+		}
+	}
+	return sourcePath, nil
 }
 
-func (r *Runner) extract(b config.Binary, downloadPath string) (binaryPath string, err error) {
-	binaryPath, err = extract.Run(r.Context, b, downloadPath)
+func (r *Runner) extract(b config.Binary, sourcePath string) (binaryPath string, err error) {
+	binaryPath, err = extract.Run(r.Context, b, sourcePath)
 	if err != nil {
 		return "", err
 	}
