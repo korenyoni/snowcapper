@@ -33,6 +33,10 @@ func Run(c *context.Context, p config.Package) error {
 			if err != nil {
 				return err
 			}
+			err = checkDaemon(c, i)
+			if err != nil {
+				return err
+			}
 		} else {
 			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
@@ -75,6 +79,17 @@ func startOpenRC(c *context.Context, i config.Init) error {
 		return nil
 	}
 	err := exec.Command(args[0], args[1:]...).Start()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func checkDaemon(c *context.Context) {
+	if c.IsDryRun {
+		return nil
+	}
+	err := exec.Command(fmt.Printf("pidof %s", i.Content)).Output()
 	if err != nil {
 		return err
 	}
