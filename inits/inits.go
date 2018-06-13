@@ -86,10 +86,11 @@ func startOpenRC(c *context.Context, i config.Init) error {
 }
 
 func checkDaemon(c *context.Context, i config.Init) error {
+	args := [...]string{"pidof", i.Content}
 	if c.IsDryRun {
 		return nil
 	}
-	_, err := exec.Command(fmt.Sprintf("pidof %s", i.Content)).Output()
+	_, err := exec.Command(args[0], args[1:]...).Output()
 	if err != nil {
 		return err
 	}
