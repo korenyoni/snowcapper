@@ -93,6 +93,7 @@ func checkDaemon(c *context.Context, i config.Init) (int, error) {
 		return -1, nil
 	}
 	pidString, err := exec.Command(args[0], args[1:]...).Output()
+	fmt.Println(pidString)
 	if err != nil {
 		return -1, err
 	}
