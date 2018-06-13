@@ -92,12 +92,12 @@ func checkDaemon(c *context.Context, i config.Init) (int, error) {
 	if c.IsDryRun {
 		return -1, nil
 	}
-	pidString, err := exec.Command(args[0], args[1:]...).Output()
-	fmt.Println(pidString)
+	pidofOut, err := exec.Command(args[0], args[1:]...).Output()
+	pidString := string(pidofOut[:])
 	if err != nil {
 		return -1, err
 	}
-	pid, err := strconv.Atoi(string(pidString))
+	pid, err := strconv.Atoi(pidString)
 	if err != nil {
 		return -1, err
 	}
