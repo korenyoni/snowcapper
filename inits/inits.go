@@ -85,7 +85,7 @@ func startOpenRC(c *context.Context, i config.Init) error {
 	return nil
 }
 
-func checkDaemon(c *context.Context) {
+func checkDaemon(c *context.Context, i config.Init) error {
 	if c.IsDryRun {
 		return nil
 	}
