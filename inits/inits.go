@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"strconv"
 	"strings"
 
 	"github.com/yonkornilov/snowcapper/config"
@@ -33,6 +34,17 @@ func Run(c *context.Context, p config.Package) error {
 			if err != nil {
 				return err
 			}
+			pid, err := checkDaemon(c, i)
+			if err != nil {
+				return err
+			}
+			if c.IsDryRun {
+				out += "\nDRY-RUN: "
+			} else {
+				out += "\n"
+			}
+			out += fmt.Sprintf("Service %s is running with pid %d\n", i.Content, pid)
+
 		} else {
 			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
@@ -79,4 +91,21 @@ func startOpenRC(c *context.Context, i config.Init) error {
 		return err
 	}
 	return nil
+}
+
+func checkDaemon(c *context.Context, i config.Init) (int, error) {
+	args := [...]string{"pidof", i.Content}
+	if c.IsDryRun {
+		return -1, nil
+	}
+	pidofOut, err := exec.Command(args[0], args[1:]...).Output()
+	pidString := strings.Trim(string(pidofOut[:]), "\n")
+	if err != nil {
+		return -1, err
+	}
+	pid, err := strconv.Atoi(pidString)
+	if err != nil {
+		return -1, err
+	}
+	return pid, nil
 }
