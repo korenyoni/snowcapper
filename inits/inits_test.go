@@ -53,3 +53,18 @@ func TestStartOpenRC(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestCheckDaemon(t *testing.T) {
+	ctx := context.New(true)
+	init := config.Init{
+		Type:    "openrc",
+		Content: "vault",
+	}
+	pid, err := checkDaemon(&ctx, init)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if pid != -1 {
+		t.Fatalf("Expected pid -1, got pid %d\n", pid)
+	}
+}
