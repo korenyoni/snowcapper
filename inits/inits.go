@@ -38,7 +38,7 @@ func Run(c *context.Context, p config.Package) error {
 			if err != nil {
 				return err
 			}
-			fmt.Printf("Service %s is running with pid %d", i.Content, pid)
+			fmt.Printf("Service %s is running with pid %d\n", i.Content, pid)
 		} else {
 			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
