@@ -38,7 +38,13 @@ func Run(c *context.Context, p config.Package) error {
 			if err != nil {
 				return err
 			}
+			if c.IsDryRun {
+				out = out + "\nDRY-RUN: "
+			} else {
+				out = out + "\n"
+			}
 			out = out + fmt.Sprintf("Service %s is running with pid %d\n", i.Content, pid)
+
 		} else {
 			return errors.New(fmt.Sprint("Error: invalid init type: %s", i.Type))
 		}
