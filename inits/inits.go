@@ -118,25 +118,6 @@ func waitforPidfile(path string) error {
 	}
 }
 
-func waitforDaemon(name string) error {
-	args := [...]string{"pidof", name}
-	timeout := time.After(5 * time.Second)
-	tick := time.Tick(100 * time.Millisecond)
-	for {
-		select {
-		case <-timeout:
-			return errors.New("timed out waiting for daemon")
-		case <-tick:
-			_, err := exec.Command(args[0], args[1:]...).Output()
-			if err != nil {
-				return err
-			} else {
-				return nil
-			}
-		}
-	}
-}
-
 func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 	pidfilePath := "/var/run/" + i.Content
 	args := [...]string{"cat", pidfilePath}
