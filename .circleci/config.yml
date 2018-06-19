@@ -25,7 +25,7 @@ jobs:
       - image: dockage/alpine-openrc:3.7
         command: /sbin/init
     steps:
-			- run: echo "1" > /var/run/test
+      - run: echo "1" > /var/run/test
       - run: apk update
       - run: apk add sudo
       - attach_workspace:
