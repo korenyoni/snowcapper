@@ -99,7 +99,7 @@ func startOpenRC(c *context.Context, i config.Init) error {
 }
 
 func checkSupervisor(c *context.Context, i config.Init) (int, error) {
-	args := [...]string{"cat", "/var/run/" + "test"}
+	args := [...]string{"cat", "/var/run/" + i.Content}
 	if c.IsDryRun {
 		return -1, nil
 	}
