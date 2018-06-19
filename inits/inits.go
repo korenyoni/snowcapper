@@ -109,9 +109,7 @@ func waitforPidfile(path string) error {
 			return errors.New("timed out waiting for pidfile")
 		case <-tick:
 			_, err := os.Stat(path)
-			if err != nil {
-				return err
-			} else {
+			if err == nil {
 				return nil
 			}
 		}
@@ -144,10 +142,6 @@ func checkDaemon(c *context.Context, i config.Init) (int, error) {
 	args := [...]string{"pidof", i.Content}
 	if c.IsDryRun {
 		return -1, nil
-	}
-	err := waitforDaemon(i.Content)
-	if err != nil {
-		return -1, err
 	}
 	pidofOut, err := exec.Command(args[0], args[1:]...).Output()
 	if err != nil {
