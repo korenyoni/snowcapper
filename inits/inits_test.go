@@ -54,6 +54,21 @@ func TestStartOpenRC(t *testing.T) {
 	}
 }
 
+func TestCheckSupervisor(t *testing.T) {
+	ctx := context.New(true)
+	init := config.Init{
+		Type:    "openrc",
+		Content: "vault",
+	}
+	pid, err := checkSupervisor(&ctx, init)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if pid != -1 {
+		t.Fatalf("Expected pid -1, got pid %d\n", pid)
+	}
+}
+
 func TestCheckDaemon(t *testing.T) {
 	ctx := context.New(true)
 	init := config.Init{
