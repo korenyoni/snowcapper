@@ -105,7 +105,6 @@ func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 	}
 	catPidfileOut, err := exec.Command(args[0], args[1:]...).Output()
 	if err != nil {
-		fmt.Println(err)
 		return -1, err
 	}
 	pidString := strings.Trim(string(catPidfileOut[:]), "\n")
