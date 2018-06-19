@@ -104,11 +104,11 @@ func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 		return -1, nil
 	}
 	catPidfileOut, err := exec.Command(args[0], args[1:]...).Output()
-	pidfileString := strings.Trim(string(catPidfileOut[:]), "\n")
+	pidString := strings.Trim(string(catPidfileOut[:]), "\n")
 	if err != nil {
 		return -1, err
 	}
-	pid, err := strconv.Atoi(pidfileString)
+	pid, err := strconv.Atoi(pidString)
 	if err != nil {
 		return -1, err
 	}
