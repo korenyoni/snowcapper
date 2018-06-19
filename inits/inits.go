@@ -100,7 +100,7 @@ func startOpenRC(c *context.Context, i config.Init) error {
 	return nil
 }
 
-func waitforPidfile(path string) error {
+func waitForPidfile(path string) error {
 	timeout := time.After(5 * time.Second)
 	tick := time.Tick(100 * time.Millisecond)
 	for {
@@ -122,7 +122,7 @@ func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 	if c.IsDryRun {
 		return -1, nil
 	}
-	err := waitforPidfile(pidfilePath)
+	err := waitForPidfile(pidfilePath)
 	if err != nil {
 		return -1, err
 	}
