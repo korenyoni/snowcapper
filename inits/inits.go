@@ -116,6 +116,25 @@ func waitForPidfile(path string) error {
 	}
 }
 
+func waitForPid(name string) (int, error) {
+	args := [...]string{"pidof", name}
+	timeout := time.After(5 * time.Second)
+	tick := time.Tick(100 * time.Millisecond)
+	for {
+		select {
+		case <-timeout:
+			return -1, errors.New("timed out waiting for pid")
+		case <-tick:
+			pidofOut, err := exec.Command(args[0], args[1:]...).Output()
+			pidString := strings.Trim(string(pidofOut[:]), "\n")
+			pid, err := strconv.Atoi(pidString)
+			if err == nil {
+				return pid, nil
+			}
+		}
+	}
+}
+
 func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 	pidfilePath := "/var/run/" + i.Content
 	args := [...]string{"cat", pidfilePath}
@@ -139,16 +158,10 @@ func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 }
 
 func checkDaemon(c *context.Context, i config.Init) (int, error) {
-	args := [...]string{"pidof", i.Content}
 	if c.IsDryRun {
 		return -1, nil
 	}
-	pidofOut, err := exec.Command(args[0], args[1:]...).Output()
-	if err != nil {
-		return -1, err
-	}
-	pidString := strings.Trim(string(pidofOut[:]), "\n")
-	pid, err := strconv.Atoi(pidString)
+	pid, err := waitForPid(i.Content)
 	if err != nil {
 		return -1, err
 	}
