@@ -3,9 +3,11 @@ package inits
 import (
 	"errors"
 	"fmt"
+	"os"
 	"os/exec"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -98,10 +100,33 @@ func startOpenRC(c *context.Context, i config.Init) error {
 	return nil
 }
 
+func waitforPidfile(path string) error {
+	timeout := time.After(5 * time.Second)
+	tick := time.Tick(100 * time.Millisecond)
+	for {
+		select {
+		case <-timeout:
+			return errors.New("timed out waiting for pidfile")
+		case <-tick:
+			_, err := os.Stat(path)
+			if err != nil {
+				return err
+			} else {
+				return nil
+			}
+		}
+	}
+}
+
 func checkSupervisor(c *context.Context, i config.Init) (int, error) {
-	args := [...]string{"cat", "/var/run/" + i.Content}
+	pidfilePath := "/var/run/" + i.Content
+	args := [...]string{"cat", pidfilePath}
 	if c.IsDryRun {
 		return -1, nil
+	}
+	err := waitforPidfile(pidfilePath)
+	if err != nil {
+		return -1, err
 	}
 	catPidfileOut, err := exec.Command(args[0], args[1:]...).Output()
 	if err != nil {
