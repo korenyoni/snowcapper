@@ -3,7 +3,6 @@ package inits
 import (
 	"errors"
 	"fmt"
-	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -100,17 +99,20 @@ func startOpenRC(c *context.Context, i config.Init) error {
 	return nil
 }
 
-func waitForPidfile(path string) error {
+func waitForPidfile(path string) (int, error) {
+	args := [...]string{"cat", path}
 	timeout := time.After(5 * time.Second)
 	tick := time.Tick(100 * time.Millisecond)
 	for {
 		select {
 		case <-timeout:
-			return errors.New("timed out waiting for pidfile")
+			return -1, errors.New("timed out waiting for pidfile")
 		case <-tick:
-			_, err := os.Stat(path)
+			catPidfileOut, err := exec.Command(args[0], args[1:]...).Output()
+			pidString := strings.Trim(string(catPidfileOut[:]), "\n")
+			pid, err := strconv.Atoi(pidString)
 			if err == nil {
-				return nil
+				return pid, nil
 			}
 		}
 	}
@@ -137,24 +139,15 @@ func waitForPid(name string) (int, error) {
 
 func checkSupervisor(c *context.Context, i config.Init) (int, error) {
 	pidfilePath := "/var/run/" + i.Content
-	args := [...]string{"cat", pidfilePath}
 	if c.IsDryRun {
 		return -1, nil
 	}
-	err := waitForPidfile(pidfilePath)
-	if err != nil {
-		return -1, err
-	}
-	catPidfileOut, err := exec.Command(args[0], args[1:]...).Output()
-	if err != nil {
-		return -1, err
-	}
-	pidString := strings.Trim(string(catPidfileOut[:]), "\n")
-	pid, err := strconv.Atoi(pidString)
+	pid, err := waitForPidfile(pidfilePath)
 	if err != nil {
 		return -1, err
 	}
 	return pid, nil
+
 }
 
 func checkDaemon(c *context.Context, i config.Init) (int, error) {
