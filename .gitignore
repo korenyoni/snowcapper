@@ -1,2 +1,4 @@
 snowcapper
 .vagrant
+*.sha512
+*.zip
