@@ -129,6 +129,7 @@ func waitForPid(name string) (int, error) {
 		case <-tick:
 			pidofOut, err := exec.Command(args[0], args[1:]...).Output()
 			pidString := strings.Trim(string(pidofOut[:]), "\n")
+			pidString = strings.Split(pidString, " ")[0]
 			pid, err := strconv.Atoi(pidString)
 			if err == nil {
 				return pid, nil
