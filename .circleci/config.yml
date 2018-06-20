@@ -30,7 +30,6 @@ jobs:
       - attach_workspace:
           at: /usr/bin/
       - run: sudo snowcapper
-      - run: sleep 3
       - run: (VAULT_ADDR=http://127.0.0.1:8200 vault status || true) 2>&1 | grep "server is not yet initialized"
 
 workflows:
