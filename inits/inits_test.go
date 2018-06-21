@@ -54,6 +54,24 @@ func TestStartOpenRC(t *testing.T) {
 	}
 }
 
+func TestWaitForPidfile(t *testing.T) {
+	expectedErrorMsg := "timed out waiting for pid"
+	_, err := waitForPid("asdfasdf")
+	if err == nil {
+	} else if err.Error() != expectedErrorMsg {
+		t.Fatalf("Expected error %s, got %s", expectedErrorMsg, err.Error())
+	}
+}
+
+func TestWaitForPid(t *testing.T) {
+	expectedErrorMsg := "timed out waiting for pidfile"
+	_, err := waitForPidfile("asdfasdf")
+	if err == nil {
+	} else if err.Error() != expectedErrorMsg {
+		t.Fatalf("Expected error %s, got %s", expectedErrorMsg, err.Error())
+	}
+}
+
 func TestCheckSupervisor(t *testing.T) {
 	ctx := context.New(true)
 	init := config.Init{
