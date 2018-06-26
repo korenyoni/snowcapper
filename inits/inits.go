@@ -16,6 +16,9 @@ func Run(c *context.Context, p config.Package) error {
 	for _, i := range p.Inits {
 		if c.IsDryRun {
 			fmt.Printf("DRY-RUN: Initializing %s with init type %s and content %s\n", p.Name, i.Type, i.Content)
+		}
+		if c.IsDryRun && c.DryRunType == context.CommandErrDryrun {
+			return exec.Command("abcdasdfabcd").Start()
 		} else {
 			fmt.Printf("Initializing %s with init type %s and content %s\n", p.Name, i.Type, i.Content)
 		}
