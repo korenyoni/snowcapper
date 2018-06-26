@@ -15,19 +15,20 @@ const (
 
 func main() {
 	configYaml, err := Asset("config.yaml")
-	if err != nil {
-		log.Fatalf(runtimeErrFormat, err)
-	}
+	catchErr(err)
+
 	conf, err := config.New(configYaml)
-	if err != nil {
-		log.Fatalf(runtimeErrFormat, err)
-	}
+	catchErr(err)
+
 	ctx := context.New(false)
 	r, err := runner.New(&ctx, conf)
-	if err != nil {
-		log.Fatalf(runtimeErrFormat, err)
-	}
+	catchErr(err)
+
 	err = r.Run()
+	catchErr(err)
+}
+
+func catchErr(err error) {
 	if err != nil {
 		switch err.(type) {
 		default:
