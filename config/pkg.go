@@ -7,6 +7,10 @@ import (
 	"github.com/go-ozzo/ozzo-validation"
 )
 
+type packagePointer struct {
+	Pointer *Package
+}
+
 type Package struct {
 	Name     string
 	Binaries []Binary
@@ -16,13 +20,17 @@ type Package struct {
 }
 
 func (p Package) Validate() error {
-	return validation.ValidateStruct(&p,
+	err := validation.ValidateStruct(&p,
 		validation.Field(&p.Name, validation.Required),
-		validation.Field(&p.Binaries, validation.Length(1, 0), validation.Required),
+		validation.Field(&p.Binaries, validation.Length(1, 0)),
 		validation.Field(&p.Files, validation.Length(1, 0)),
 		validation.Field(&p.Services, validation.Length(1, 0)),
-		validation.Field(&p.Inits, validation.Length(0, 0), validation.By(checkInitContent)),
+		validation.Field(&p.Inits, validation.Length(1, 0), validation.By(checkInitContent)),
 	)
+	if err != nil {
+		return err
+	}
+	return validation.Validate(packagePointer{Pointer: &p}, validation.By(validatePackage))
 }
 
 func checkInitContent(value interface{}) error {
@@ -32,6 +40,15 @@ func checkInitContent(value interface{}) error {
 			validation.Field(&i.Content, validation.Required)) != nil) {
 			return errors.New(fmt.Sprintf("Content must be supplied to command"))
 		}
+	}
+	return nil
+}
+
+func validatePackage(value interface{}) error {
+	p := *(value.(packagePointer).Pointer)
+	failCondition := p.Inits == nil && p.Files == nil && p.Binaries == nil && p.Services == nil
+	if failCondition {
+		return errors.New("Package must contain a name, and one of binaries, files, services, or inits")
 	}
 	return nil
 }
