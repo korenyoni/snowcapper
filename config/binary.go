@@ -7,10 +7,10 @@ import (
 )
 
 type Binary struct {
-	Name   string
-	Src    string
-	Format string
-	Mode   os.FileMode
+	Name   string 		`yaml:"name"`
+	Src    string 		`yaml:"src"`
+	Format string 		`yaml:"format"`
+	Mode   os.FileMode 	`yaml:"mode"`
 }
 
 func (b Binary) Validate() error {

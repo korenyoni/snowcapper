@@ -5,8 +5,8 @@ import (
 )
 
 type Service struct {
-	Binary string
-	Args   []string
+	Binary string	`yaml:"binary"`
+	Args   []string	`yaml:"args"`
 }
 
 func (s Service) Validate() error {

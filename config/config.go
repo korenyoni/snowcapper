@@ -7,7 +7,7 @@ import (
 )
 
 type Config struct {
-	Packages []Package
+	Packages []Package 	`yaml:"packages"`
 }
 
 func (c Config) Validate() error {

@@ -12,11 +12,11 @@ type packagePointer struct {
 }
 
 type Package struct {
-	Name     string
-	Binaries []Binary
-	Files    []File
-	Services []Service
-	Inits    []Init
+	Name     string		`yaml:"name"`
+	Binaries []Binary	`yaml:"binaries"`
+	Files    []File		`yaml:"files"`
+	Services []Service	`yaml:"services"`
+	Inits    []Init		`yaml:"inits"`
 }
 
 func (p Package) Validate() error {
