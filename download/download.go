@@ -72,7 +72,7 @@ func checkHashIfExists(body []byte, hash string) (exists bool, err error) {
 	hasher.Write(body)
 	fileHashSumHex := hex.EncodeToString(hasher.Sum(nil))
 	if fileHashSumHex != hash {
-		return false, errors.New("File does not match hashsum")
+		return false, errors.New("file does not match hashsum")
 	}
 	return true, nil
 }
