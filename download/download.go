@@ -2,7 +2,6 @@ package download
 
 import (
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -48,7 +47,7 @@ func Run(c *context.Context, b config.Binary, target string) error {
 		return err
 	}
 
-	_, err = io.Copy(out, resp.Body)
+	_, err = out.Write(respBodyBytes) 
 	if err != nil {
 		return err
 	}
