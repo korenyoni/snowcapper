@@ -110,3 +110,25 @@ func TestCheckHashIfExistsSha224Bad(t *testing.T) {
 		t.Fatalf("Expected error, got nothing")
 	}
 }
+
+func TestCheckHashIfExistsSha1(t *testing.T) {
+	testBinary, err := testasset.Asset("test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = checkHashIfExists(testBinary, "4e1243bd22c66e76c2ba9eddc1f91394e57f9f83")
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
+}
+
+func TestCheckHashIfExistsSha1Bad(t *testing.T) {
+	testBinary, err := testasset.Asset("test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = checkHashIfExists(testBinary, "fe1243bd22c66e76c2ba9eddc1f91394e57f9f83")
+	if err == nil {
+		t.Fatalf("Expected error, got nothing")
+	}
+}
