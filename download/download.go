@@ -42,7 +42,7 @@ func Run(c *context.Context, b config.Binary, target string) error {
 		return err
 	}
 
-	err = checkHashIfExists(respBodyBytes, b.SrcHash)
+	hashExists, err := checkHashIfExists(respBodyBytes, b.SrcHash)
 	if err != nil {
 		return err
 	}
@@ -52,25 +52,29 @@ func Run(c *context.Context, b config.Binary, target string) error {
 		return err
 	}
 
-	fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
+	if hashExists {
+		fmt.Printf("Successfully downloaded %s to %s with hashsum %s\n", b.Name, target, b.SrcHash)
+	} else {
+		fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
+	}
 	return nil
 }
 
-func checkHashIfExists(body []byte, hash string) error {
+func checkHashIfExists(body []byte, hash string) (exists bool, err error) {
 	hashTypeCode := config.GetHashType(hash)
 	if hashTypeCode == 0 {
-		return nil
+		return false, nil
 	}
 	hasher, err := getHasher(hashTypeCode) 
 	if err != nil {
-		return err
+		return false, err
 	}
 	hasher.Write(body)
 	fileHashSumHex := hex.EncodeToString(hasher.Sum(nil))
 	if fileHashSumHex != hash {
-		return errors.New("File does not match hashsum")
+		return false, errors.New("File does not match hashsum")
 	}
-	return nil
+	return true, nil
 }
 
 func getHasher(hashTypeCode int) (hash.Hash, error) {
