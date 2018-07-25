@@ -165,3 +165,14 @@ func TestCheckHashIfExistsEmpty(t *testing.T) {
 		t.Fatalf("Expected no error, got %s", err)
 	}
 }
+
+func TestCheckHashIfExistsInvalid(t *testing.T) {
+	testBinary, err := testasset.Asset("test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = checkHashIfExists(testBinary, "f8e8fca2dc0f")
+	if err == nil {
+		t.Fatalf("Expected error, got nothing")
+	}
+}
