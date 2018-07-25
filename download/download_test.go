@@ -154,3 +154,14 @@ func TestCheckHashIfExistsMd5Bad(t *testing.T) {
 		t.Fatalf("Expected error, got nothing")
 	}
 }
+
+func TestCheckHashIfExistsEmpty(t *testing.T) {
+	testBinary, err := testasset.Asset("test.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = checkHashIfExists(testBinary, "")
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
+}
