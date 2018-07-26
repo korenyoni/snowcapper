@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "alpine/alpine64"
+  config.vm.box = "generic/alpine38"
   config.vm.provision "file", source: "snowcapper", destination: "snowcapper"
   config.vm.provision "shell", inline: "
   apk update &&
