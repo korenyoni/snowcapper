@@ -22,7 +22,7 @@ jobs:
             - snowcapper
   test-alpine:
     docker:
-      - image: dockage/alpine-openrc:3.7
+      - image: dockage/alpine:3.8-openrc
         command: /sbin/init
     steps:
       - run: apk update
