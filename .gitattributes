@@ -1,1 +1,1 @@
-*.snc text linguist-lanugage=YAML
+*.snc text eol=lf whitespace=blank-at-eol,-blank-at-eof,-space-before-tab,tab-in-indent,tabwidth=2 diff=yaml linguist-language=YAML
