@@ -6,7 +6,7 @@ default: get binary vagrant
 
 get:
 	go get -u github.com/tmthrgd/go-bindata/...
-	go-bindata config.yaml
+	go-bindata config.snc
 	go get ./...
 
 test:

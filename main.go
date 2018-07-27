@@ -14,7 +14,7 @@ const (
 )
 
 func main() {
-	configYaml, err := Asset("config.yaml")
+	configYaml, err := Asset("config.snc")
 	catchErr(err)
 
 	conf, err := config.New(configYaml)
