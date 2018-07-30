@@ -1,1 +1,1 @@
-*.snc linguist-language=YAML
+*.snc linguist-language=YAML linguist-vendored=true
