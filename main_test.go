@@ -10,14 +10,14 @@ import (
 )
 
 func TestConfigBinData(t *testing.T) {
-	_, err := Asset("config.yaml")
+	_, err := Asset("config.snc")
 	if err != nil {
 		t.Fatal(fmt.Sprint("Expecting no error, got \n%s", err))
 	}
 }
 
 func TestConfigNew(t *testing.T) {
-	configYaml, _ := Asset("config.yaml")
+	configYaml, _ := Asset("config.snc")
 	_, err := config.New(configYaml)
 	if err != nil {
 		t.Fatal(fmt.Sprint("Expecting no error, got \n%s", err))
@@ -25,7 +25,7 @@ func TestConfigNew(t *testing.T) {
 }
 
 func TestRunnerNew(t *testing.T) {
-	configYaml, _ := Asset("config.yaml")
+	configYaml, _ := Asset("config.snc")
 	conf, _ := config.New(configYaml)
 	ctx := context.New(true)
 	_, err := runner.New(&ctx, conf)
@@ -35,7 +35,7 @@ func TestRunnerNew(t *testing.T) {
 }
 
 func TestRunnerCommandErr(t *testing.T) {
-	configYaml, _ := Asset("config.yaml")
+	configYaml, _ := Asset("config.snc")
 	conf, _ := config.New(configYaml)
 	ctx := context.New(true)
 	ctx, err := context.CommandErr(ctx)

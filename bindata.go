@@ -6,8 +6,7 @@
 //  asset-dir: true
 //  restore: true
 // sources:
-//  config.yaml
-//  testing/test.txt
+//  config.snc
 
 package main
 
@@ -62,8 +61,8 @@ func (*asset) Sys() interface{} {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]*asset{
-	"config.yaml": &asset{
-		name: "config.yaml",
+	"config.snc": &asset{
+		name: "config.snc",
 		data: "" +
 			"\x74\x92\xdd\x6e\xe3\x20\x10\x85\xef\xf3\x14\x23\xdf\xd7\x26\xfe\x8d\x90\xfa\x2c\xd6\x00\x43\x8c" +
 			"\x8a\xc1\x82\x49\xb5\xdd\x9f\x77\x5f\x39\x4e\x2d\xb7\xd9\xc5\x17\xd6\x1c\x3e\xce\x81\x81\x05\xf5" +
@@ -83,15 +82,7 @@ var _bindata = map[string]*asset{
 			"\x97\xc1\x85\xcc\xe8\x3d\x99\xf2\xf4\x37\x00\x00\xff\xff",
 		size: 809,
 		mode: 0664,
-		time: time.Unix(1532490341, 54323789),
-	},
-	"testing/test.txt": &asset{
-		name: "test.txt",
-		data: "" +
-			"\x2a\x49\x2d\x2e\xe1\x02\x04\x00\x00\xff\xff",
-		size: 5,
-		mode: 0664,
-		time: time.Unix(1532491389, 908036555),
+		time: time.Unix(1532609228, 323338577),
 	},
 }
 
@@ -214,8 +205,5 @@ func AssetDir(name string) ([]string, error) {
 type bintree map[string]bintree
 
 var _bintree = bintree{
-	"config.yaml": bintree{},
-	"testing": bintree{
-		"test.txt": bintree{},
-	},
+	"config.snc": bintree{},
 }
