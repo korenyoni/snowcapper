@@ -7,11 +7,13 @@ import (
 )
 
 type Config struct {
+	Extends  []Extend	`yaml:"extends"`
 	Packages []Package 	`yaml:"packages"`
 }
 
 func (c Config) Validate() error {
 	return validation.ValidateStruct(&c,
+		validation.Field(&c.Extends),
 		validation.Field(&c.Packages, validation.Length(1, 0), validation.Required),
 	)
 }

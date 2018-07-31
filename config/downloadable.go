@@ -30,8 +30,8 @@ type Binary struct {
 	Mode   	os.FileMode 	`yaml:"mode"`
 }
 
-type Extends struct {
-	Downloadable 		`yaml:",inline"`
+type Extend struct {
+	Downloadable 	`yaml:",inline"`
 }
 
 func (b Binary) Validate() error {
@@ -52,7 +52,7 @@ func (b *Binary) GetDownloadPath() string {
 	return "/tmp/" + b.Name + "." + b.Format
 }
 
-func (e Extends) Validate() error {
+func (e Extend) Validate() error {
 	return validation.ValidateStruct(&e,
 		validation.Field(&e.Src, validation.Required),
 		validation.Field(&e.SrcHash, validation.By(validateSrcHash)),
