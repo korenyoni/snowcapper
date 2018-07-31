@@ -8,7 +8,7 @@ import (
 	"github.com/yonkornilov/snowcapper/context"
 )
 
-func TestDownloadDryRun(t *testing.T) {
+func TestDownloadDryRunBinaryGood(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
 		Downloadable: config.Downloadable {
