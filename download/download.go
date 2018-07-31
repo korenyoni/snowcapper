@@ -18,7 +18,18 @@ import (
 	"github.com/yonkornilov/snowcapper/context"
 )
 
-func Run(c *context.Context, b config.Binary) (downloadPath string, err error) {
+func Run(c *context.Context, downloadable interface{}) (downloadPath string, err error) {
+	switch t := downloadable.(type) {
+	case config.Binary:
+		return downloadBinary(c, downloadable.(config.Binary))
+	case config.Extend:
+		return downloadExtensibleProfile(c, downloadable.(config.Extend))
+	default:
+		return "", errors.New(fmt.Sprintf("not a valid Downloadable type: %s", t))
+	}
+}
+
+func downloadBinary(c *context.Context, b config.Binary) (downloadPath string, err error) {
 	target := b.GetDownloadPath()
 	if c.IsDryRun {
 		fmt.Printf("DRY-RUN: Downloading %s from %s ...\n", b.Name, b.Src)
@@ -59,6 +70,10 @@ func Run(c *context.Context, b config.Binary) (downloadPath string, err error) {
 		fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
 	}
 	return target, nil
+}
+
+func downloadExtensibleProfile(c *context.Context, e config.Extend) (downloadPath string, err error) {
+	return "", nil
 }
 
 func checkHashIfExists(body []byte, hash string) (exists bool, err error) {

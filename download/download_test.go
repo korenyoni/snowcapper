@@ -24,6 +24,14 @@ func TestDownloadDryRun(t *testing.T) {
 	}
 }
 
+func TestDownloadDryRunInvalidDownloadable(t *testing.T) {
+	ctx := context.New(true)
+	_, err := Run(&ctx, t)
+	if err == nil {
+		t.Fatalf("Expected error, got nothing")
+	}
+}
+
 func TestCheckHashIfExistsSha512(t *testing.T) {
 	testBinary, err := testasset.Asset("test.txt")
 	if err != nil {
