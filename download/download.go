@@ -18,39 +18,39 @@ import (
 	"github.com/yonkornilov/snowcapper/context"
 )
 
-func Run(c *context.Context, b config.Binary) error {
+func Run(c *context.Context, b config.Binary) (downloadPath string, err error) {
 	target := b.GetDownloadPath()
 	if c.IsDryRun {
 		fmt.Printf("DRY-RUN: Downloading %s from %s ...\n", b.Name, b.Src)
 		fmt.Printf("DRY-RUN: Successfully downloaded %s to %s\n", b.Name, target)
-		return nil
+		return target, nil
 	}
 	fmt.Printf("Downloading %s from %s ...\n", b.Name, b.Src)
 	out, err := os.Create(target)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer out.Close()
 
 	resp, err := http.Get(b.Src)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer resp.Body.Close()
 
 	respBodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	hashExists, err := checkHashIfExists(respBodyBytes, b.SrcHash)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	_, err = out.Write(respBodyBytes) 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	if hashExists {
@@ -58,7 +58,7 @@ func Run(c *context.Context, b config.Binary) error {
 	} else {
 		fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
 	}
-	return nil
+	return target, nil
 }
 
 func checkHashIfExists(body []byte, hash string) (exists bool, err error) {

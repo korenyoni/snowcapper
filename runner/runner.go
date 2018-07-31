@@ -53,19 +53,18 @@ func (r *Runner) Run() (err error) {
 	return nil
 }
 
-func (r *Runner) getBinary(b config.Binary) (sourcePath string, err error) {
-	sourcePath = b.Src
+func (r *Runner) getBinary(b config.Binary) (downloadPath string, err error) {
 	remoteExp, err := regexp.Compile(`(http|https)://.*`)
 	if err != nil {
 		return "", err
 	}
-	if remoteExp.MatchString(sourcePath) {
-		err = download.Run(r.Context, b)
+	if remoteExp.MatchString(b.Src) {
+		downloadPath, err = download.Run(r.Context, b)
 		if err != nil {
 			return "", err
 		}
 	}
-	return sourcePath, nil
+	return downloadPath, nil
 }
 
 func (r *Runner) extract(b config.Binary, sourcePath string) (binaryPath string, err error) {

@@ -18,7 +18,7 @@ func TestDownloadDryRun(t *testing.T) {
 		Format: "tar.gz",
 		Mode:   0700,
 	}
-	err := Run(&ctx, binary)
+	_, err := Run(&ctx, binary)
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
