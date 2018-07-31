@@ -60,8 +60,7 @@ func (r *Runner) getBinary(b config.Binary) (sourcePath string, err error) {
 		return "", err
 	}
 	if remoteExp.MatchString(sourcePath) {
-		sourcePath = b.GetDownloadPath()
-		err = download.Run(r.Context, b, sourcePath)
+		err = download.Run(r.Context, b)
 		if err != nil {
 			return "", err
 		}

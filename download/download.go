@@ -18,7 +18,8 @@ import (
 	"github.com/yonkornilov/snowcapper/context"
 )
 
-func Run(c *context.Context, b config.Binary, target string) error {
+func Run(c *context.Context, b config.Binary) error {
+	target := b.GetDownloadPath()
 	if c.IsDryRun {
 		fmt.Printf("DRY-RUN: Downloading %s from %s ...\n", b.Name, b.Src)
 		fmt.Printf("DRY-RUN: Successfully downloaded %s to %s\n", b.Name, target)

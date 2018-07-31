@@ -9,7 +9,6 @@ import (
 )
 
 func TestDownloadDryRun(t *testing.T) {
-	target := "/tmp/test.tar.gz"
 	ctx := context.New(true)
 	binary := config.Binary{
 		Downloadable: config.Downloadable {
@@ -19,7 +18,7 @@ func TestDownloadDryRun(t *testing.T) {
 		Format: "tar.gz",
 		Mode:   0700,
 	}
-	err := Run(&ctx, binary, target)
+	err := Run(&ctx, binary)
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
