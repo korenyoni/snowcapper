@@ -21,8 +21,10 @@ func TestRunnerDryRun(t *testing.T) {
 		`,
 	}
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}
@@ -66,8 +68,10 @@ func TestRunnerLocalSourceDryRun(t *testing.T) {
 		`,
 	}
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "/home/testuser/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "/home/testuser/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}

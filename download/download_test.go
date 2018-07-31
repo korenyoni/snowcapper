@@ -12,8 +12,10 @@ func TestDownloadDryRun(t *testing.T) {
 	target := "/tmp/test.tar.gz"
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}
