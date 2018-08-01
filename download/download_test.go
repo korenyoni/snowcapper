@@ -27,6 +27,22 @@ func TestDownloadDryRunBinaryGood(t *testing.T) {
 	}
 }
 
+func TestDownloadDryRunExtendGood(t *testing.T) {
+	ctx := context.New(true)
+	extend := config.Extend{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
+	}
+	_, err := Run(&ctx, DownloadableHolder{
+		ExtendPointer: &extend,
+		Downloadable: extend,
+	})
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
+}
+
 func TestDownloadDryRunInvalidDownloadable(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
