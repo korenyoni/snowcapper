@@ -20,6 +20,7 @@ jobs:
           root: /go/src/github.com/yonkornilov/snowcapper
           paths:
             - snowcapper
+            - examples/vim.snc
   test-alpine:
     docker:
       - image: dockage/alpine:3.8-openrc
@@ -28,7 +29,8 @@ jobs:
       - run: apk update
       - run: apk add sudo
       - attach_workspace:
-          at: /usr/bin/
+          at: /tmp/
+      - run: cp /tmp/snowcapper /usr/bin/snowcapper
       - run: sudo snowcapper
       - run: (VAULT_ADDR=http://127.0.0.1:8200 vault status || true) 2>&1 | grep "server is not yet initialized"
 

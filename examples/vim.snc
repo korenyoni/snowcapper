@@ -1,0 +1,5 @@
+packages:
+  - name: vim 
+    inits:
+      - type: command
+        content: "apk update && apk add vim"

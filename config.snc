@@ -1,3 +1,5 @@
+extends:
+  - src: /tmp/vim.snc
 packages:
   - name: vault
     binaries:
