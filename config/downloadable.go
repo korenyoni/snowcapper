@@ -59,6 +59,10 @@ func (e Extend) Validate() error {
 	)
 }
 
+func (e *Extend) GetDownloadPath() string {
+	return "/tmp/extend_" + e.Src 
+}
+
 func validateSrcHash(value interface{}) error {
 	s, _ := value.(string)
 	if GetHashType(s) == Invalid {

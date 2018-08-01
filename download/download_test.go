@@ -18,7 +18,10 @@ func TestDownloadDryRunBinaryGood(t *testing.T) {
 		Format: "tar.gz",
 		Mode:   0700,
 	}
-	_, err := Run(&ctx, binary)
+	_, err := Run(&ctx, DownloadableHolder{
+		BinaryPointer: &binary,
+		Downloadable: binary,
+	})
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
@@ -26,7 +29,18 @@ func TestDownloadDryRunBinaryGood(t *testing.T) {
 
 func TestDownloadDryRunInvalidDownloadable(t *testing.T) {
 	ctx := context.New(true)
-	_, err := Run(&ctx, t)
+	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
+		Name:   "test",
+		Format: "tar.gz",
+		Mode:   0700,
+	}
+	_, err := Run(&ctx, DownloadableHolder{
+		BinaryPointer: &binary,
+		Downloadable: t,
+	})
 	if err == nil {
 		t.Fatalf("Expected error, got nothing")
 	}
