@@ -4,6 +4,7 @@ import (
 	"os"
 	"regexp"
 	"io/ioutil"
+	"errors"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -114,6 +115,10 @@ func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
 	if err != nil {
 		return "", err
 	}
+	localExp, err := regexp.Compile(`.*\.snc`)
+	if err != nil {
+		return "", err
+	}
 	if remoteExp.MatchString(e.Src) {
 		downloadPath, err = download.Run(r.Context, download.DownloadableHolder{
 			ExtendPointer: &e,
@@ -122,6 +127,8 @@ func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
 		if err != nil {
 			return "", err
 		}
+	} else if !localExp.MatchString(e.Src) {
+		return "", errors.New("Extend source is neither a local or remote *.snc file")
 	}
 	return downloadPath, nil
 }
