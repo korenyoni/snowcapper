@@ -1,18 +1,18 @@
 package download
 
 import (
+	"encoding/hex"
+	"errors"
 	"fmt"
+	"hash"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"hash"
-	"errors"
-	"encoding/hex"
 
-	"crypto/sha512"
-	"crypto/sha256"
-	"crypto/sha1"
 	"crypto/md5"
+	"crypto/sha1"
+	"crypto/sha256"
+	"crypto/sha512"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -21,7 +21,7 @@ import (
 type DownloadableHolder struct {
 	BinaryPointer *config.Binary
 	ExtendPointer *config.Extend
-	Downloadable interface{}
+	Downloadable  interface{}
 }
 
 func Run(c *context.Context, downloadableHolder DownloadableHolder) (downloadPath string, err error) {
@@ -73,7 +73,7 @@ func Run(c *context.Context, downloadableHolder DownloadableHolder) (downloadPat
 		return "", err
 	}
 
-	_, err = out.Write(respBodyBytes) 
+	_, err = out.Write(respBodyBytes)
 	if err != nil {
 		return "", err
 	}
@@ -91,7 +91,7 @@ func checkHashIfExists(body []byte, hash string) (exists bool, err error) {
 	if hashTypeCode == 0 {
 		return false, nil
 	}
-	hasher, err := getHasher(hashTypeCode) 
+	hasher, err := getHasher(hashTypeCode)
 	if err != nil {
 		return false, err
 	}

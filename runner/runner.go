@@ -1,10 +1,10 @@
 package runner
 
 import (
+	"errors"
+	"io/ioutil"
 	"os"
 	"regexp"
-	"io/ioutil"
-	"errors"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -81,7 +81,7 @@ func (r *Runner) getBinary(b config.Binary) (downloadPath string, err error) {
 	if remoteExp.MatchString(b.Src) {
 		downloadPath, err = download.Run(r.Context, download.DownloadableHolder{
 			BinaryPointer: &b,
-			Downloadable: b,
+			Downloadable:  b,
 		})
 		if err != nil {
 			return "", err
@@ -122,7 +122,7 @@ func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
 	if remoteExp.MatchString(e.Src) {
 		downloadPath, err = download.Run(r.Context, download.DownloadableHolder{
 			ExtendPointer: &e,
-			Downloadable: e,
+			Downloadable:  e,
 		})
 		if err != nil {
 			return "", err
