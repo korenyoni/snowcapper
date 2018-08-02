@@ -4,6 +4,9 @@ LATEST_TAG := $(shell git describe $(shell git rev-list --tags --max-count=1))
 
 default: get binary vagrant
 
+fmt:
+	gofmt -s -w .
+
 get:
 	go get -u github.com/tmthrgd/go-bindata/...
 	go-bindata config.snc
