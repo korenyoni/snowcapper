@@ -1,5 +1,14 @@
 version: 2
 jobs:
+  coverage:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/yonkornilov/snowcapper
+    steps:
+      - checkout
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run:  chmod +x ./cc-test-reporter 
+      - run: ./cc-test-reporter before-build
   fmt-test-golang:
     docker:
       - image: circleci/golang:1.9
@@ -46,6 +55,7 @@ workflows:
   version: 2
   btd:
     jobs:
+      - coverage
       - fmt-test-golang
       - test-golang:
           requires:
