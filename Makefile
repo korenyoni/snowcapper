@@ -15,7 +15,7 @@ get:
 test:
 	go test -v ./...
 
-fmt_test:
+fmt-test:
 	gofmt -l . | wc -c | grep -E ^0$
 
 binary:
