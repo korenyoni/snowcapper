@@ -3,16 +3,16 @@ package download
 import (
 	"testing"
 
-	"github.com/yonkornilov/snowcapper/testasset"
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
+	"github.com/yonkornilov/snowcapper/testasset"
 )
 
 func TestDownloadDryRunBinaryGood(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
-		Downloadable: config.Downloadable {
-			Src:    "https://test.com/test.tar.gz",
+		Downloadable: config.Downloadable{
+			Src: "https://test.com/test.tar.gz",
 		},
 		Name:   "test",
 		Format: "tar.gz",
@@ -20,7 +20,7 @@ func TestDownloadDryRunBinaryGood(t *testing.T) {
 	}
 	_, err := Run(&ctx, DownloadableHolder{
 		BinaryPointer: &binary,
-		Downloadable: binary,
+		Downloadable:  binary,
 	})
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
@@ -30,13 +30,13 @@ func TestDownloadDryRunBinaryGood(t *testing.T) {
 func TestDownloadDryRunExtendGood(t *testing.T) {
 	ctx := context.New(true)
 	extend := config.Extend{
-		Downloadable: config.Downloadable {
-			Src:    "https://test.com/test.tar.gz",
+		Downloadable: config.Downloadable{
+			Src: "https://test.com/test.tar.gz",
 		},
 	}
 	_, err := Run(&ctx, DownloadableHolder{
 		ExtendPointer: &extend,
-		Downloadable: extend,
+		Downloadable:  extend,
 	})
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
@@ -46,8 +46,8 @@ func TestDownloadDryRunExtendGood(t *testing.T) {
 func TestDownloadDryRunInvalidDownloadable(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
-		Downloadable: config.Downloadable {
-			Src:    "https://test.com/test.tar.gz",
+		Downloadable: config.Downloadable{
+			Src: "https://test.com/test.tar.gz",
 		},
 		Name:   "test",
 		Format: "tar.gz",
@@ -55,7 +55,7 @@ func TestDownloadDryRunInvalidDownloadable(t *testing.T) {
 	}
 	_, err := Run(&ctx, DownloadableHolder{
 		BinaryPointer: &binary,
-		Downloadable: t,
+		Downloadable:  t,
 	})
 	if err == nil {
 		t.Fatalf("Expected error, got nothing")
