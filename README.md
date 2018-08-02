@@ -1,5 +1,5 @@
 ### Snowcapper - Immutable config management for Alpine Linux
-[![CircleCI](https://circleci.com/gh/yonkornilov/snowcapper.svg?style=svg)](https://circleci.com/gh/yonkornilov/snowcapper) [![go-report-card](https://goreportcard.com/badge/github.com/yonkornilov/snowcapper)](https://goreportcard.com/report/github.com/yonkornilov/snowcapper)
+[![CircleCI](https://circleci.com/gh/yonkornilov/snowcapper.svg?style=svg)](https://circleci.com/gh/yonkornilov/snowcapper) [![go-report-card](https://goreportcard.com/badge/github.com/yonkornilov/snowcapper)](https://goreportcard.com/report/github.com/yonkornilov/snowcapper) [![Test Coverage](https://api.codeclimate.com/v1/badges/e8faf2bb27cc5e9c10a4/test_coverage)](https://codeclimate.com/github/yonkornilov/snowcapper/test_coverage)
 
 ![snowcapper](_images/snowcapper.png)
 
