@@ -7,6 +7,8 @@ Snowcapper is a single binary for bootstrapping services onto an Alpine Linux im
 ### Example Config:
 
 ```
+extends:
+  - src: /tmp/examples/vim.snc
 packages:
   - name: vault
     binaries:
