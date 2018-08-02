@@ -13,8 +13,8 @@ const (
 )
 
 type Init struct {
-	Type    string `yaml:"type"`
-	Content string `yaml:"content"`
+	Type    string	`yaml:"type"`
+	Content string	`yaml:"content"`
 }
 
 func (i Init) Validate() error {

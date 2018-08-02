@@ -1,8 +1,8 @@
 package runner
 
 import (
-	"os"
 	"testing"
+	"os"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -22,8 +22,8 @@ func TestRunnerDryRun(t *testing.T) {
 		`,
 	}
 	binary := config.Binary{
-		Downloadable: config.Downloadable{
-			Src: "https://test.com/test.tar.gz",
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
 		},
 		Name:   "test",
 		Format: "tar.gz",
@@ -69,8 +69,8 @@ func TestRunnerLocalSourceDryRun(t *testing.T) {
 		`,
 	}
 	binary := config.Binary{
-		Downloadable: config.Downloadable{
-			Src: "/home/testuser/test.tar.gz",
+		Downloadable: config.Downloadable {
+			Src:    "/home/testuser/test.tar.gz",
 		},
 		Name:   "test",
 		Format: "tar.gz",
@@ -109,9 +109,9 @@ func TestRunnerRemoteExtendDryRun(t *testing.T) {
 	var files []config.File
 	var inits []config.Init
 	ctx := context.New(true)
-	extend := config.Extend{
-		Downloadable: config.Downloadable{
-			Src: "https://test.com/example.snc",
+	extend := config.Extend {
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/example.snc",
 		},
 	}
 	file := config.File{
@@ -122,8 +122,8 @@ func TestRunnerRemoteExtendDryRun(t *testing.T) {
 		`,
 	}
 	binary := config.Binary{
-		Downloadable: config.Downloadable{
-			Src: "https://test.com/test.tar.gz",
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
 		},
 		Name:   "test",
 		Format: "tar.gz",
@@ -144,7 +144,7 @@ func TestRunnerRemoteExtendDryRun(t *testing.T) {
 		Inits:    inits,
 	})
 	conf := config.Config{
-		Extends:  extends,
+		Extends: extends,
 		Packages: packages,
 	}
 	runner := Runner{
@@ -162,9 +162,9 @@ func TestGetExtendLocal(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
-	extend := config.Extend{
-		Downloadable: config.Downloadable{
-			Src: pwd + "/../examples/vim.snc",
+	extend := config.Extend {
+		Downloadable: config.Downloadable {
+			Src:    pwd + "/../examples/vim.snc",
 		},
 	}
 	conf := config.Config{}
@@ -187,9 +187,9 @@ func TestGetExtendLocalInvalidFile(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
 	}
-	extend := config.Extend{
-		Downloadable: config.Downloadable{
-			Src: pwd + "/../examples/vim_nonexistant.snc",
+	extend := config.Extend {
+		Downloadable: config.Downloadable {
+			Src:    pwd + "/../examples/vim_nonexistant.snc",
 		},
 	}
 	conf := config.Config{}

@@ -7,8 +7,8 @@ import (
 )
 
 type Config struct {
-	Extends  []Extend  `yaml:"extends"`
-	Packages []Package `yaml:"packages"`
+	Extends  []Extend	`yaml:"extends"`
+	Packages []Package 	`yaml:"packages"`
 }
 
 func (c Config) Validate() error {

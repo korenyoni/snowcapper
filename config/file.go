@@ -7,9 +7,9 @@ import (
 )
 
 type File struct {
-	Path    string      `yaml:"path"`
-	Content string      `yaml:"content"`
-	Mode    os.FileMode `yaml:"mode"`
+	Path    string		`yaml:"path"`
+	Content string		`yaml:"content"`
+	Mode    os.FileMode	`yaml:"mode"`
 }
 
 func (f File) Validate() error {
