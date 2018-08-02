@@ -10,8 +10,10 @@ import (
 func TestExtractDryRunTar(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar",
 		Format: "tar",
 		Mode:   0700,
 	}
@@ -24,8 +26,10 @@ func TestExtractDryRunTar(t *testing.T) {
 func TestExtractDryRunRar(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.rar",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.rar",
 		Format: "rar",
 		Mode:   0700,
 	}
@@ -38,8 +42,10 @@ func TestExtractDryRunRar(t *testing.T) {
 func TestExtractDryRunZip(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.zip",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.zip",
 		Format: "zip",
 		Mode:   0700,
 	}
@@ -52,8 +58,10 @@ func TestExtractDryRunZip(t *testing.T) {
 func TestExtractDryRunTarGz(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}
@@ -66,8 +74,10 @@ func TestExtractDryRunTarGz(t *testing.T) {
 func TestExtractDryRunTarBz2(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.bz2",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.bz2",
 		Format: "tar.bz2",
 		Mode:   0700,
 	}
@@ -80,8 +90,10 @@ func TestExtractDryRunTarBz2(t *testing.T) {
 func TestExtractDryRunTarXz(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.xz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.xz",
 		Format: "tar.xz",
 		Mode:   0700,
 	}
@@ -94,8 +106,10 @@ func TestExtractDryRunTarXz(t *testing.T) {
 func TestExtractDryRunTarLz4(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.lz4",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.lz4",
 		Format: "tar.lz4",
 		Mode:   0700,
 	}
@@ -108,8 +122,10 @@ func TestExtractDryRunTarLz4(t *testing.T) {
 func TestExtractDryRunTarSz(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.sz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.sz",
 		Format: "tar.sz",
 		Mode:   0700,
 	}
@@ -122,8 +138,10 @@ func TestExtractDryRunTarSz(t *testing.T) {
 func TestExtractDryRunUnsupported(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.fake",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.fake",
 		Format: "tar.fake",
 		Mode:   0700,
 	}
@@ -135,8 +153,10 @@ func TestExtractDryRunUnsupported(t *testing.T) {
 
 func TestExtractGetExtractedPath(t *testing.T) {
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}
@@ -150,8 +170,10 @@ func TestExtractGetExtractedPath(t *testing.T) {
 
 func TestExtractGetExtractedBinaryPath(t *testing.T) {
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}

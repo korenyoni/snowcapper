@@ -18,46 +18,72 @@ import (
 	"github.com/yonkornilov/snowcapper/context"
 )
 
-func Run(c *context.Context, b config.Binary, target string) error {
-	if c.IsDryRun {
-		fmt.Printf("DRY-RUN: Downloading %s from %s ...\n", b.Name, b.Src)
-		fmt.Printf("DRY-RUN: Successfully downloaded %s to %s\n", b.Name, target)
-		return nil
+type DownloadableHolder struct {
+	BinaryPointer *config.Binary
+	ExtendPointer *config.Extend
+	Downloadable interface{}
+}
+
+func Run(c *context.Context, downloadableHolder DownloadableHolder) (downloadPath string, err error) {
+	var target string
+	var name string
+	var src string
+	var src_hash string
+	switch t := downloadableHolder.Downloadable.(type) {
+	case config.Binary:
+		binary := *downloadableHolder.BinaryPointer
+		target = binary.GetDownloadPath()
+		src = binary.Src
+		src_hash = binary.SrcHash
+		name = binary.Name
+	case config.Extend:
+		extend := *downloadableHolder.ExtendPointer
+		target = extend.GetDownloadPath()
+		src = extend.Src
+		src_hash = extend.SrcHash
+		name = src
+	default:
+		return "", errors.New(fmt.Sprintf("not a valid Downloadable type: %s", t))
 	}
-	fmt.Printf("Downloading %s from %s ...\n", b.Name, b.Src)
+	if c.IsDryRun {
+		fmt.Printf("DRY-RUN: Downloading %s from %s ...\n", name, src)
+		fmt.Printf("DRY-RUN: Successfully downloaded %s to %s\n", name, target)
+		return target, nil
+	}
+	fmt.Printf("Downloading %s from %s ...\n", name, src)
 	out, err := os.Create(target)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer out.Close()
 
-	resp, err := http.Get(b.Src)
+	resp, err := http.Get(src)
 	if err != nil {
-		return err
+		return "", err
 	}
 	defer resp.Body.Close()
 
 	respBodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	hashExists, err := checkHashIfExists(respBodyBytes, b.SrcHash)
+	hashExists, err := checkHashIfExists(respBodyBytes, src_hash)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	_, err = out.Write(respBodyBytes) 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	if hashExists {
-		fmt.Printf("Successfully downloaded %s to %s with hashsum %s\n", b.Name, target, b.SrcHash)
+		fmt.Printf("Successfully downloaded %s to %s with hashsum %s\n", name, target, src_hash)
 	} else {
-		fmt.Printf("Successfully downloaded %s to %s\n", b.Name, target)
+		fmt.Printf("Successfully downloaded %s to %s\n", name, target)
 	}
-	return nil
+	return target, nil
 }
 
 func checkHashIfExists(body []byte, hash string) (exists bool, err error) {

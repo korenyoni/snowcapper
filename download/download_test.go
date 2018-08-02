@@ -8,18 +8,57 @@ import (
 	"github.com/yonkornilov/snowcapper/context"
 )
 
-func TestDownloadDryRun(t *testing.T) {
-	target := "/tmp/test.tar.gz"
+func TestDownloadDryRunBinaryGood(t *testing.T) {
 	ctx := context.New(true)
 	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
 		Name:   "test",
-		Src:    "https://test.com/test.tar.gz",
 		Format: "tar.gz",
 		Mode:   0700,
 	}
-	err := Run(&ctx, binary, target)
+	_, err := Run(&ctx, DownloadableHolder{
+		BinaryPointer: &binary,
+		Downloadable: binary,
+	})
 	if err != nil {
 		t.Fatalf("Expected no error, got %s", err)
+	}
+}
+
+func TestDownloadDryRunExtendGood(t *testing.T) {
+	ctx := context.New(true)
+	extend := config.Extend{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
+	}
+	_, err := Run(&ctx, DownloadableHolder{
+		ExtendPointer: &extend,
+		Downloadable: extend,
+	})
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
+}
+
+func TestDownloadDryRunInvalidDownloadable(t *testing.T) {
+	ctx := context.New(true)
+	binary := config.Binary{
+		Downloadable: config.Downloadable {
+			Src:    "https://test.com/test.tar.gz",
+		},
+		Name:   "test",
+		Format: "tar.gz",
+		Mode:   0700,
+	}
+	_, err := Run(&ctx, DownloadableHolder{
+		BinaryPointer: &binary,
+		Downloadable: t,
+	})
+	if err == nil {
+		t.Fatalf("Expected error, got nothing")
 	}
 }
 
