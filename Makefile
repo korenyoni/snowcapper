@@ -15,6 +15,9 @@ get:
 test:
 	go test -v ./...
 
+fmt_test:
+	gofmt -l . | wc -c | grep -E ^0$
+
 binary:
 	CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' .
 
