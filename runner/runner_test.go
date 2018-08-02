@@ -176,3 +176,21 @@ func TestGetExtendLocal(t *testing.T) {
 		t.Fatalf("Expected downloadPath to be %s, got %s", extend.Src, downloadPath)
 	}
 }
+
+func TestGetExtendLocalInvalidFile(t *testing.T) {
+	extend := config.Extend {
+		Downloadable: config.Downloadable {
+			Src:    "examples/vim_nonexistant.snc",
+		},
+	}
+	conf := config.Config{}
+	ctx := context.New(true)
+	runner := Runner{
+		Config:  &conf,
+		Context: &ctx,
+	}
+	_, err := runner.getExtend(extend)
+	if err == nil {
+		t.Fatal("Expected error got nothing")
+	}
+}
