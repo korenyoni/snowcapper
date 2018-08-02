@@ -1,5 +1,13 @@
 version: 2
 jobs:
+  fmt-test-golang:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/yonkornilov/snowcapper
+    steps:
+      - checkout
+      - run: make get
+      - run: make fmt-test
   test-golang:
     docker:
       - image: circleci/golang:1.9
@@ -38,7 +46,10 @@ workflows:
   version: 2
   btd:
     jobs:
-      - test-golang
+      - fmt-test-golang
+      - test-golang:
+          requires:
+            - fmt-test-golang
       - build:
           requires:
             - test-golang

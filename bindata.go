@@ -61,7 +61,7 @@ func (*asset) Sys() interface{} {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]*asset{
-	"config.snc": &asset{
+	"config.snc": {
 		name: "config.snc",
 		data: "" +
 			"\x74\x92\xdf\x6e\xe3\x2c\x10\xc5\xef\xf3\x14\x23\xdf\xd7\x76\x12\xdb\x89\x90\xfa\x2c\xd6\x00\x43" +

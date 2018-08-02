@@ -61,7 +61,7 @@ func (*asset) Sys() interface{} {
 
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]*asset{
-	"test.txt": &asset{
+	"test.txt": {
 		name: "test.txt",
 		data: "" +
 			"\x2a\x49\x2d\x2e\xe1\x02\x04\x00\x00\xff\xff",
