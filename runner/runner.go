@@ -130,7 +130,7 @@ func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
 	} else if !localExp.MatchString(e.Src) {
 		return "", errors.New("Extend source is neither a local or remote *.snc file")
 	}
-	return downloadPath, nil
+	return e.Src, nil
 }
 
 func (r *Runner) createConfigFromExtend(downloadPath string) (c config.Config, err error) {
