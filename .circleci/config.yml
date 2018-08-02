@@ -50,6 +50,15 @@ jobs:
       - run: cp /tmp/snowcapper /usr/bin/snowcapper
       - run: sudo snowcapper
       - run: (VAULT_ADDR=http://127.0.0.1:8200 vault status || true) 2>&1 | grep "server is not yet initialized"
+  coverage-post-build:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/yonkornilov/snowcapper
+    steps:
+      - checkout
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run:  chmod +x ./cc-test-reporter 
+      - run: ./cc-test-reporter after-build --exit-code $EXIT_CODE
 
 workflows:
   version: 2
@@ -66,3 +75,6 @@ workflows:
       - test-alpine:
           requires:
             - build
+      - coverage-post-build:
+          requires:
+            - test-alpine 
