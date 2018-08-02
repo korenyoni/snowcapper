@@ -8,6 +8,14 @@ jobs:
       - checkout
       - run: make get
       - run: make test
+  fmt-test-golang:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/yonkornilov/snowcapper
+    steps:
+      - checkout
+      - run: make get
+      - run: make fmt-test
   build:
     docker:
       - image: circleci/golang:1.9
@@ -39,9 +47,12 @@ workflows:
   btd:
     jobs:
       - test-golang
+      - fmt-test-golang:
+        requires:
+            - test-golang
       - build:
           requires:
-            - test-golang
+            - fmt-test-golang
       - test-alpine:
           requires:
             - build
