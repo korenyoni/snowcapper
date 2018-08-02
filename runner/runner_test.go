@@ -2,6 +2,7 @@ package runner
 
 import (
 	"testing"
+	"os"
 
 	"github.com/yonkornilov/snowcapper/config"
 	"github.com/yonkornilov/snowcapper/context"
@@ -157,9 +158,13 @@ func TestRunnerRemoteExtendDryRun(t *testing.T) {
 }
 
 func TestGetExtendLocal(t *testing.T) {
+	pwd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
 	extend := config.Extend {
 		Downloadable: config.Downloadable {
-			Src:    "examples/vim.snc",
+			Src:    pwd + "/../examples/vim.snc",
 		},
 	}
 	conf := config.Config{}
@@ -178,9 +183,13 @@ func TestGetExtendLocal(t *testing.T) {
 }
 
 func TestGetExtendLocalInvalidFile(t *testing.T) {
+	pwd, err := os.Getwd()
+	if err != nil {
+		t.Fatalf("Expected no error, got %s", err)
+	}
 	extend := config.Extend {
 		Downloadable: config.Downloadable {
-			Src:    "examples/vim_nonexistant.snc",
+			Src:    pwd + "/../examples/vim_nonexistant.snc",
 		},
 	}
 	conf := config.Config{}
@@ -189,8 +198,8 @@ func TestGetExtendLocalInvalidFile(t *testing.T) {
 		Config:  &conf,
 		Context: &ctx,
 	}
-	_, err := runner.getExtend(extend)
+	_, err = runner.getExtend(extend)
 	if err == nil {
-		t.Fatal("Expected error got nothing")
+		t.Fatal("Expected error, got nothing")
 	}
 }
