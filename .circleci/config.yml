@@ -47,7 +47,7 @@ jobs:
     working_directory: /go/src/github.com/yonkornilov/snowcapper
     steps:
       - checkout
-      - run: bash coverage.sh
+      - run: bash codecov.sh
       - run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
 workflows:
