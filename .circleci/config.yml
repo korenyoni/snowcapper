@@ -41,6 +41,15 @@ jobs:
       - run: cp /tmp/snowcapper /usr/bin/snowcapper
       - run: sudo snowcapper
       - run: (VAULT_ADDR=http://127.0.0.1:8200 vault status || true) 2>&1 | grep "server is not yet initialized"
+  coverage:
+    docker:
+      - image: circleci/golang:1.9
+    working_directory: /go/src/github.com/yonkornilov/snowcapper
+    steps:
+      - checkout
+      - run: make get
+      - run: bash codecov.sh
+      - run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
 workflows:
   version: 2
@@ -56,3 +65,6 @@ workflows:
       - test-alpine:
           requires:
             - build
+      - coverage:
+          requires:
+            - test-alpine 
