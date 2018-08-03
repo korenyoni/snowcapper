@@ -47,6 +47,7 @@ jobs:
     working_directory: /go/src/github.com/yonkornilov/snowcapper
     steps:
       - checkout
+      - run: make get
       - run: bash codecov.sh
       - run: bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN
 
