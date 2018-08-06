@@ -86,6 +86,12 @@ func (r *Runner) getBinary(b config.Binary) (path string, err error) {
 		if err != nil {
 			return "", err
 		}
+	} else {
+		path = b.Src
+		_, err = os.Stat(path)
+		if err != nil {
+			return "", err
+		}
 	}
 	return path, nil
 }
