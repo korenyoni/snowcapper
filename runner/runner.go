@@ -73,13 +73,13 @@ func (r *Runner) Run() (err error) {
 	return nil
 }
 
-func (r *Runner) getBinary(b config.Binary) (downloadPath string, err error) {
+func (r *Runner) getBinary(b config.Binary) (path string, err error) {
 	remoteExp, err := regexp.Compile(`(http|https)://.*`)
 	if err != nil {
 		return "", err
 	}
 	if remoteExp.MatchString(b.Src) {
-		downloadPath, err = download.Run(r.Context, download.DownloadableHolder{
+		path, err = download.Run(r.Context, download.DownloadableHolder{
 			BinaryPointer: &b,
 			Downloadable:  b,
 		})
@@ -87,7 +87,7 @@ func (r *Runner) getBinary(b config.Binary) (downloadPath string, err error) {
 			return "", err
 		}
 	}
-	return downloadPath, nil
+	return path, nil
 }
 
 func (r *Runner) extract(b config.Binary, sourcePath string) (binaryPath string, err error) {
@@ -110,7 +110,7 @@ func (r *Runner) chmodBinary(binaryPath string, mode os.FileMode) (err error) {
 	return nil
 }
 
-func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
+func (r *Runner) getExtend(e config.Extend) (path string, err error) {
 	remoteExp, err := regexp.Compile(`(http|https)://.*\.snc`)
 	if err != nil {
 		return "", err
@@ -120,7 +120,7 @@ func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
 		return "", err
 	}
 	if remoteExp.MatchString(e.Src) {
-		downloadPath, err = download.Run(r.Context, download.DownloadableHolder{
+		path, err = download.Run(r.Context, download.DownloadableHolder{
 			ExtendPointer: &e,
 			Downloadable:  e,
 		})
@@ -130,13 +130,13 @@ func (r *Runner) getExtend(e config.Extend) (downloadPath string, err error) {
 	} else if !localExp.MatchString(e.Src) {
 		return "", errors.New("Extend source is neither a local or remote *.snc file")
 	} else {
-		downloadPath = e.Src
-		_, err = os.Stat(downloadPath)
+		path = e.Src
+		_, err = os.Stat(path)
 		if err != nil {
 			return "", err
 		}
 	}
-	return downloadPath, nil
+	return path, nil
 }
 
 func (r *Runner) createConfigFromExtend(downloadPath string) (c config.Config, err error) {
