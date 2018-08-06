@@ -88,10 +88,10 @@ func (r *Runner) getBinary(b config.Binary) (path string, err error) {
 		}
 	} else {
 		path = b.Src
-		_, err = os.Stat(path)
-		if err != nil {
-			return "", err
-		}
+	}
+	_, err = os.Stat(path)
+	if err != nil {
+		return "", err
 	}
 	return path, nil
 }
@@ -137,10 +137,10 @@ func (r *Runner) getExtend(e config.Extend) (path string, err error) {
 		return "", errors.New("Extend source is neither a local or remote *.snc file")
 	} else {
 		path = e.Src
-		_, err = os.Stat(path)
-		if err != nil {
-			return "", err
-		}
+	}
+	_, err = os.Stat(path)
+	if err != nil {
+		return "", err
 	}
 	return path, nil
 }
