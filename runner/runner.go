@@ -145,6 +145,17 @@ func (r *Runner) getExtend(e config.Extend) (path string, err error) {
 	return path, nil
 }
 
+func (r *Runner) stat(path string) (ok bool, err error) {
+	if r.Context.IsDryRun {
+		return true, nil
+	}
+	_, err = os.Stat(path)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
 func (r *Runner) createConfigFromExtend(downloadPath string) (c config.Config, err error) {
 	if r.Context.IsDryRun {
 		return c, nil
