@@ -89,9 +89,9 @@ func (r *Runner) getBinary(b config.Binary) (path string, err error) {
 	} else {
 		path = b.Src
 	}
-	_, err = os.Stat(path)
+	_, err = r.stat(path)
 	if err != nil {
-		return "", err
+		return "", nil
 	}
 	return path, nil
 }
@@ -138,9 +138,9 @@ func (r *Runner) getExtend(e config.Extend) (path string, err error) {
 	} else {
 		path = e.Src
 	}
-	_, err = os.Stat(path)
+	_, err = r.stat(path)
 	if err != nil {
-		return "", err
+		return "", nil
 	}
 	return path, nil
 }
